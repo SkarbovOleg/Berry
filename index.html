@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>🍓 Ягодка — мессенджер</title>
   <style>
-    /* ---------- Ягодный стиль ---------- */
+    /* ---------- Ягодный стиль (ПК) ---------- */
     * {
       margin: 0;
       padding: 0;
@@ -19,18 +19,18 @@
       display: flex;
       justify-content: center;
       align-items: center;
-      padding: 16px;
+      padding: 24px;
     }
 
     .app-container {
-      max-width: 420px;
+      max-width: 1100px;
       width: 100%;
-      height: 92vh;
-      max-height: 780px;
+      height: 90vh;
+      max-height: 800px;
       background: rgba(255, 245, 247, 0.92);
       backdrop-filter: blur(8px);
-      border-radius: 40px 40px 28px 28px;
-      box-shadow: 0 20px 40px rgba(180, 60, 80, 0.2),
+      border-radius: 32px;
+      box-shadow: 0 20px 60px rgba(180, 60, 80, 0.25),
                   inset 0 1px 4px rgba(255, 255, 255, 0.6);
       display: flex;
       flex-direction: column;
@@ -42,7 +42,7 @@
     /* ----- Шапка ----- */
     .app-header {
       background: linear-gradient(135deg, #d81b60, #ad1457);
-      padding: 18px 20px 14px;
+      padding: 16px 28px;
       color: white;
       display: flex;
       justify-content: space-between;
@@ -52,20 +52,20 @@
     }
 
     .app-header h1 {
-      font-size: 22px;
+      font-size: 26px;
       font-weight: 700;
       display: flex;
       align-items: center;
-      gap: 6px;
+      gap: 10px;
     }
 
     .app-header h1 span {
-      font-size: 26px;
+      font-size: 30px;
     }
 
     .header-actions {
       display: flex;
-      gap: 12px;
+      gap: 14px;
       align-items: center;
     }
 
@@ -73,61 +73,90 @@
       background: rgba(255, 255, 255, 0.2);
       border: none;
       color: white;
-      padding: 6px 12px;
-      border-radius: 20px;
-      font-size: 13px;
+      padding: 8px 18px;
+      border-radius: 24px;
+      font-size: 14px;
       cursor: pointer;
       transition: 0.2s;
       backdrop-filter: blur(4px);
+      font-weight: 500;
     }
 
     .header-actions button:hover {
       background: rgba(255, 255, 255, 0.35);
+      transform: scale(1.02);
     }
 
     .header-actions .badge {
       background: #ff6b6b;
       color: white;
       border-radius: 50%;
-      padding: 1px 7px;
-      font-size: 11px;
+      padding: 2px 9px;
+      font-size: 12px;
       font-weight: 700;
-      margin-left: 4px;
+      margin-left: 6px;
     }
 
-    /* ----- Основное содержимое ----- */
+    /* ----- Основное содержимое (ПК: 3 колонки) ----- */
     .main-content {
       flex: 1;
+      display: flex;
       overflow: hidden;
       position: relative;
     }
 
-    .tab-content {
-      display: none;
-      height: 100%;
-      flex-direction: column;
-    }
-
-    .tab-content.active {
+    /* ----- Левая панель: Чаты ----- */
+    .sidebar {
+      width: 320px;
+      min-width: 280px;
+      background: rgba(255, 240, 245, 0.3);
+      border-right: 1px solid rgba(255, 255, 255, 0.3);
       display: flex;
+      flex-direction: column;
+      flex-shrink: 0;
     }
 
-    /* ----- Вкладка "Чаты" ----- */
+    .sidebar-header {
+      padding: 16px 20px 12px;
+      font-weight: 700;
+      font-size: 18px;
+      color: #4a1a2a;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .sidebar-header .new-chat-btn {
+      background: linear-gradient(135deg, #d81b60, #ad1457);
+      border: none;
+      color: white;
+      padding: 6px 16px;
+      border-radius: 20px;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+
+    .sidebar-header .new-chat-btn:hover {
+      transform: scale(1.05);
+    }
+
     .chat-list {
       flex: 1;
       overflow-y: auto;
-      padding: 12px 16px;
-      background: rgba(255, 240, 245, 0.2);
+      padding: 8px 12px;
     }
 
     .chat-item {
       display: flex;
       align-items: center;
-      gap: 12px;
-      padding: 12px 14px;
-      background: rgba(255, 255, 255, 0.7);
+      gap: 14px;
+      padding: 14px 16px;
+      background: rgba(255, 255, 255, 0.6);
       border-radius: 16px;
-      margin-bottom: 8px;
+      margin-bottom: 6px;
       cursor: pointer;
       transition: 0.2s;
       border: 1px solid rgba(255, 255, 255, 0.3);
@@ -136,18 +165,24 @@
 
     .chat-item:hover {
       background: rgba(255, 255, 255, 0.9);
-      transform: scale(1.01);
+      transform: translateX(4px);
+      box-shadow: 0 4px 12px rgba(180, 60, 80, 0.1);
+    }
+
+    .chat-item.active {
+      background: rgba(216, 27, 96, 0.12);
+      border-color: #d81b60;
     }
 
     .chat-item .chat-avatar {
-      width: 48px;
-      height: 48px;
+      width: 52px;
+      height: 52px;
       border-radius: 50%;
       background: linear-gradient(135deg, #f06292, #ec407a);
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 20px;
+      font-size: 22px;
       color: white;
       flex-shrink: 0;
     }
@@ -159,8 +194,8 @@
 
     .chat-item .chat-name {
       font-weight: 600;
-      color: #4a1a2a;
-      font-size: 15px;
+      color: #2a0a1a;
+      font-size: 16px;
     }
 
     .chat-item .chat-last-msg {
@@ -185,55 +220,289 @@
       background: #d81b60;
       color: white;
       border-radius: 50%;
-      padding: 2px 8px;
-      font-size: 11px;
+      padding: 2px 9px;
+      font-size: 12px;
       font-weight: 700;
       margin-top: 4px;
       display: inline-block;
+      min-width: 22px;
+      text-align: center;
     }
 
-    /* ----- Вкладка "Профиль" ----- */
-    .profile-content {
+    /* ----- Центральная панель: Чат ----- */
+    .chat-panel {
       flex: 1;
-      padding: 30px 24px;
-      overflow-y: auto;
-      background: rgba(255, 240, 245, 0.2);
+      display: flex;
+      flex-direction: column;
+      background: rgba(255, 245, 247, 0.5);
+      min-width: 0;
+    }
+
+    .chat-panel-empty {
+      flex: 1;
       display: flex;
       flex-direction: column;
       align-items: center;
+      justify-content: center;
+      color: #7a4a5a;
+      padding: 40px;
     }
 
-    .profile-avatar {
-      width: 100px;
-      height: 100px;
+    .chat-panel-empty .big-icon {
+      font-size: 72px;
+      margin-bottom: 16px;
+    }
+
+    .chat-panel-empty h2 {
+      font-size: 24px;
+      margin-bottom: 8px;
+    }
+
+    .chat-panel-empty p {
+      opacity: 0.7;
+    }
+
+    .chat-panel-header {
+      padding: 16px 24px;
+      background: rgba(255, 255, 255, 0.6);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      flex-shrink: 0;
+    }
+
+    .chat-panel-header .chat-title {
+      font-size: 20px;
+      font-weight: 700;
+      color: #2a0a1a;
+    }
+
+    .chat-panel-header .chat-status {
+      font-size: 13px;
+      color: #7a4a5a;
+    }
+
+    .chat-panel-header .chat-avatar-small {
+      width: 44px;
+      height: 44px;
       border-radius: 50%;
       background: linear-gradient(135deg, #f06292, #ec407a);
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 44px;
+      font-size: 18px;
       color: white;
-      margin-bottom: 16px;
+      flex-shrink: 0;
+    }
+
+    .messages-area {
+      flex: 1;
+      padding: 20px 24px;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .input-area {
+      padding: 16px 24px 20px;
+      background: rgba(255, 255, 255, 0.5);
+      backdrop-filter: blur(4px);
+      border-top: 1px solid rgba(255, 255, 255, 0.3);
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      flex-shrink: 0;
+    }
+
+    .input-area input[type="text"] {
+      flex: 1;
+      padding: 12px 20px;
+      border: none;
+      border-radius: 30px;
+      background: white;
+      font-size: 16px;
+      outline: 2px solid transparent;
+      transition: 0.2s;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+    }
+
+    .input-area input[type="text"]:focus {
+      outline: 2px solid #ec407a;
+      box-shadow: 0 4px 16px rgba(216, 27, 96, 0.1);
+    }
+
+    .input-area button {
+      background: linear-gradient(135deg, #d81b60, #ad1457);
+      border: none;
+      color: white;
+      padding: 12px 28px;
+      border-radius: 30px;
+      font-weight: 600;
+      font-size: 16px;
+      cursor: pointer;
+      transition: 0.2s;
+      box-shadow: 0 4px 16px rgba(216, 27, 96, 0.25);
+      white-space: nowrap;
+    }
+
+    .input-area button:hover {
+      transform: scale(1.03);
+      box-shadow: 0 6px 24px rgba(216, 27, 96, 0.35);
+    }
+
+    .input-area button:active {
+      transform: scale(0.96);
+    }
+
+    .input-area .sticker-btn {
+      background: rgba(216, 27, 96, 0.1);
+      color: #d81b60;
+      padding: 12px 16px;
+      font-size: 24px;
+      box-shadow: none;
+      min-width: 52px;
+    }
+
+    .input-area .sticker-btn:hover {
+      background: rgba(216, 27, 96, 0.2);
+      transform: scale(1.05);
+    }
+
+    /* ----- Правая панель: Стикеры и Профиль (вкладки) ----- */
+    .right-panel {
+      width: 320px;
+      min-width: 280px;
+      background: rgba(255, 240, 245, 0.2);
+      border-left: 1px solid rgba(255, 255, 255, 0.3);
+      display: flex;
+      flex-direction: column;
+      flex-shrink: 0;
+      overflow: hidden;
+    }
+
+    .right-panel-tabs {
+      display: flex;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+      flex-shrink: 0;
+    }
+
+    .right-panel-tabs button {
+      flex: 1;
+      padding: 14px 0;
+      border: none;
+      background: transparent;
+      font-size: 14px;
+      font-weight: 600;
+      color: #7a4a5a;
+      cursor: pointer;
+      transition: 0.2s;
+      border-bottom: 3px solid transparent;
+    }
+
+    .right-panel-tabs button.active {
+      color: #d81b60;
+      border-bottom-color: #d81b60;
+      background: rgba(216, 27, 96, 0.05);
+    }
+
+    .right-panel-tabs button:hover {
+      background: rgba(216, 27, 96, 0.05);
+    }
+
+    .right-panel-content {
+      flex: 1;
+      overflow-y: auto;
+      padding: 16px;
+    }
+
+    .right-tab {
+      display: none;
+    }
+
+    .right-tab.active {
+      display: block;
+    }
+
+    /* ----- Стикеры (правая панель) ----- */
+    .stickers-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 10px;
+    }
+
+    .sticker-item {
+      aspect-ratio: 1;
+      background: rgba(255, 255, 255, 0.7);
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 36px;
+      cursor: pointer;
+      transition: 0.2s;
+      border: 2px solid transparent;
+      backdrop-filter: blur(4px);
+    }
+
+    .sticker-item:hover {
+      transform: scale(1.1);
+      border-color: #d81b60;
+      background: rgba(255, 255, 255, 0.95);
+      box-shadow: 0 4px 16px rgba(216, 27, 96, 0.15);
+    }
+
+    .sticker-item:active {
+      transform: scale(0.92);
+    }
+
+    .sticker-category {
+      font-size: 14px;
+      font-weight: 600;
+      color: #4a1a2a;
+      margin: 14px 0 8px;
+      padding-left: 4px;
+    }
+
+    /* ----- Профиль (правая панель) ----- */
+    .profile-content {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 8px 0;
+    }
+
+    .profile-avatar {
+      width: 90px;
+      height: 90px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #f06292, #ec407a);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 40px;
+      color: white;
+      margin-bottom: 12px;
       box-shadow: 0 8px 24px rgba(216, 27, 96, 0.2);
       border: 4px solid white;
     }
 
     .profile-name {
-      font-size: 24px;
+      font-size: 22px;
       font-weight: 700;
       color: #2a0a1a;
-      margin-bottom: 4px;
+      margin-bottom: 2px;
     }
 
     .profile-status {
       color: #7a4a5a;
       font-size: 14px;
-      margin-bottom: 24px;
+      margin-bottom: 20px;
     }
 
     .profile-field {
       width: 100%;
-      max-width: 300px;
       padding: 12px 16px;
       background: rgba(255, 255, 255, 0.7);
       border-radius: 12px;
@@ -262,7 +531,7 @@
       font-size: 14px;
       text-align: right;
       outline: none;
-      width: 120px;
+      width: 140px;
     }
 
     .profile-field input::placeholder {
@@ -272,7 +541,9 @@
     .profile-stats {
       display: flex;
       gap: 30px;
-      margin: 16px 0 20px;
+      margin: 12px 0 18px;
+      width: 100%;
+      justify-content: center;
     }
 
     .profile-stats .stat {
@@ -280,7 +551,7 @@
     }
 
     .profile-stats .stat .num {
-      font-size: 20px;
+      font-size: 22px;
       font-weight: 700;
       color: #d81b60;
     }
@@ -294,17 +565,19 @@
       background: linear-gradient(135deg, #d81b60, #ad1457);
       border: none;
       color: white;
-      padding: 12px 32px;
+      padding: 12px 28px;
       border-radius: 30px;
       font-weight: 600;
       font-size: 15px;
       cursor: pointer;
       transition: 0.2s;
       box-shadow: 0 4px 12px rgba(216, 27, 96, 0.3);
+      width: 100%;
+      margin-top: 4px;
     }
 
     .profile-btn:hover {
-      transform: scale(1.03);
+      transform: scale(1.02);
       box-shadow: 0 6px 20px rgba(216, 27, 96, 0.4);
     }
 
@@ -312,13 +585,15 @@
       background: transparent;
       border: 2px solid #d81b60;
       color: #d81b60;
-      padding: 10px 28px;
+      padding: 10px 20px;
       border-radius: 30px;
       font-weight: 600;
       font-size: 14px;
       cursor: pointer;
       transition: 0.2s;
       margin-top: 8px;
+      width: 100%;
+      text-align: center;
     }
 
     .profile-btn-outline:hover {
@@ -326,219 +601,10 @@
       color: white;
     }
 
-    /* ----- Вкладка "Стикеры" ----- */
-    .stickers-content {
-      flex: 1;
-      padding: 16px;
-      overflow-y: auto;
-      background: rgba(255, 240, 245, 0.2);
-    }
-
-    .stickers-grid {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 12px;
-    }
-
-    .sticker-item {
-      aspect-ratio: 1;
-      background: rgba(255, 255, 255, 0.7);
-      border-radius: 16px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 40px;
-      cursor: pointer;
-      transition: 0.2s;
-      border: 2px solid transparent;
-      backdrop-filter: blur(4px);
-    }
-
-    .sticker-item:hover {
-      transform: scale(1.08);
-      border-color: #d81b60;
-      background: rgba(255, 255, 255, 0.95);
-    }
-
-    .sticker-item:active {
-      transform: scale(0.92);
-    }
-
-    .sticker-category {
-      font-size: 13px;
-      font-weight: 600;
-      color: #4a1a2a;
-      margin: 16px 0 8px;
-      padding-left: 4px;
-    }
-
-    /* ----- Нижняя навигация ----- */
-    .bottom-nav {
-      display: flex;
-      background: rgba(255, 255, 255, 0.6);
-      backdrop-filter: blur(8px);
-      border-top: 1px solid rgba(255, 255, 255, 0.3);
-      flex-shrink: 0;
-    }
-
-    .bottom-nav button {
-      flex: 1;
-      padding: 12px 0;
-      border: none;
-      background: transparent;
-      font-size: 13px;
-      font-weight: 600;
-      color: #7a4a5a;
-      cursor: pointer;
-      transition: 0.2s;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 2px;
-      border-top: 3px solid transparent;
-    }
-
-    .bottom-nav button .nav-icon {
-      font-size: 22px;
-    }
-
-    .bottom-nav button.active {
-      color: #d81b60;
-      border-top-color: #d81b60;
-      background: rgba(216, 27, 96, 0.05);
-    }
-
-    .bottom-nav button:hover {
-      background: rgba(216, 27, 96, 0.05);
-    }
-
-    /* ----- Окно чата (открывается при клике на чат) ----- */
-    .chat-window {
-      display: none;
-      flex-direction: column;
-      height: 100%;
-      background: rgba(255, 245, 247, 0.95);
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      z-index: 10;
-    }
-
-    .chat-window.open {
-      display: flex;
-    }
-
-    .chat-window-header {
-      background: linear-gradient(135deg, #d81b60, #ad1457);
-      padding: 14px 18px;
-      color: white;
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      flex-shrink: 0;
-    }
-
-    .chat-window-header .back-btn {
-      background: rgba(255, 255, 255, 0.2);
-      border: none;
-      color: white;
-      font-size: 20px;
-      cursor: pointer;
-      width: 36px;
-      height: 36px;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      transition: 0.2s;
-    }
-
-    .chat-window-header .back-btn:hover {
-      background: rgba(255, 255, 255, 0.3);
-    }
-
-    .chat-window-header .chat-title {
-      font-size: 18px;
-      font-weight: 600;
-    }
-
-    .chat-window-header .chat-status {
-      font-size: 12px;
-      opacity: 0.8;
-    }
-
-    .chat-window .messages-area {
-      flex: 1;
-      padding: 16px;
-      overflow-y: auto;
-      display: flex;
-      flex-direction: column;
-      gap: 4px;
-      background: rgba(255, 240, 245, 0.1);
-    }
-
-    .chat-window .input-area {
-      padding: 12px 16px 14px;
-      background: rgba(255, 255, 255, 0.5);
-      backdrop-filter: blur(4px);
-      border-top: 1px solid rgba(255, 255, 255, 0.3);
-      display: flex;
-      gap: 8px;
-      align-items: center;
-      flex-shrink: 0;
-    }
-
-    .chat-window .input-area input[type="text"] {
-      flex: 1;
-      padding: 10px 16px;
-      border: none;
-      border-radius: 24px;
-      background: white;
-      font-size: 15px;
-      outline: 2px solid transparent;
-      transition: 0.2s;
-    }
-
-    .chat-window .input-area input[type="text"]:focus {
-      outline: 2px solid #ec407a;
-    }
-
-    .chat-window .input-area button {
-      background: linear-gradient(135deg, #d81b60, #ad1457);
-      border: none;
-      color: white;
-      padding: 10px 20px;
-      border-radius: 30px;
-      font-weight: 600;
-      font-size: 15px;
-      cursor: pointer;
-      transition: 0.2s;
-      box-shadow: 0 4px 12px rgba(216, 27, 96, 0.25);
-      white-space: nowrap;
-    }
-
-    .chat-window .input-area button:hover {
-      transform: scale(1.02);
-    }
-
-    .chat-window .input-area .sticker-btn {
-      background: rgba(216, 27, 96, 0.1);
-      color: #d81b60;
-      padding: 10px 14px;
-      font-size: 20px;
-      box-shadow: none;
-    }
-
-    .chat-window .input-area .sticker-btn:hover {
-      background: rgba(216, 27, 96, 0.2);
-    }
-
-    /* Сообщения в чате (ягодный стиль) */
-    .chat-window .message {
-      max-width: 80%;
-      padding: 10px 16px;
+    /* ----- Сообщения (ягодный стиль) ----- */
+    .message {
+      max-width: 70%;
+      padding: 10px 18px;
       border-radius: 24px 24px 24px 6px;
       background: white;
       box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
@@ -546,45 +612,61 @@
       word-break: break-word;
       border: 1px solid rgba(255, 255, 255, 0.5);
       animation: fadeUp 0.25s ease;
+      margin-bottom: 2px;
     }
 
-    .chat-window .message.own {
+    .message.own {
       align-self: flex-end;
       background: linear-gradient(135deg, #f06292, #ec407a);
       color: white;
       border-radius: 24px 24px 6px 24px;
     }
 
-    .chat-window .message .msg-user {
+    .message .msg-user {
       font-weight: 600;
       font-size: 13px;
       color: #880e4f;
       margin-bottom: 2px;
       display: flex;
       justify-content: space-between;
-      gap: 12px;
+      gap: 14px;
     }
 
-    .chat-window .message.own .msg-user {
+    .message.own .msg-user {
       color: #fce4ec;
     }
 
-    .chat-window .message .msg-time {
+    .message .msg-time {
       font-size: 10px;
       opacity: 0.7;
       font-weight: 400;
     }
 
-    .chat-window .message .msg-text {
+    .message .msg-text {
       font-size: 15px;
-      line-height: 1.4;
+      line-height: 1.45;
     }
 
-    .chat-window .message .sticker-emoji {
-      font-size: 48px;
+    .message .sticker-emoji {
+      font-size: 56px;
       display: block;
       text-align: center;
       padding: 4px 0;
+      line-height: 1.2;
+    }
+
+    .date-divider {
+      text-align: center;
+      font-size: 12px;
+      color: #7a4a5a;
+      padding: 10px 0 6px;
+    }
+
+    .date-divider span {
+      background: rgba(255, 255, 255, 0.6);
+      padding: 4px 18px;
+      border-radius: 20px;
+      font-weight: 500;
     }
 
     /* Анимация */
@@ -595,30 +677,72 @@
 
     /* Скролл */
     .chat-list::-webkit-scrollbar,
-    .stickers-content::-webkit-scrollbar,
-    .chat-window .messages-area::-webkit-scrollbar {
-      width: 4px;
+    .messages-area::-webkit-scrollbar,
+    .right-panel-content::-webkit-scrollbar {
+      width: 5px;
     }
 
     .chat-list::-webkit-scrollbar-thumb,
-    .stickers-content::-webkit-scrollbar-thumb,
-    .chat-window .messages-area::-webkit-scrollbar-thumb {
+    .messages-area::-webkit-scrollbar-thumb,
+    .right-panel-content::-webkit-scrollbar-thumb {
       background: #f06292;
       border-radius: 10px;
     }
 
-    /* Адаптив */
-    @media (max-width: 480px) {
-      body {
-        padding: 0;
+    .chat-list::-webkit-scrollbar-track,
+    .messages-area::-webkit-scrollbar-track,
+    .right-panel-content::-webkit-scrollbar-track {
+      background: transparent;
+    }
+
+    /* ----- Адаптив для ПК (маленькие экраны) ----- */
+    @media (max-width: 900px) {
+      .sidebar {
+        width: 240px;
+        min-width: 200px;
       }
-      .app-container {
-        height: 100vh;
-        max-height: none;
-        border-radius: 0;
+      .right-panel {
+        width: 260px;
+        min-width: 220px;
       }
       .stickers-grid {
-        grid-template-columns: repeat(4, 1fr);
+        grid-template-columns: repeat(3, 1fr);
+      }
+    }
+
+    @media (max-width: 700px) {
+      body {
+        padding: 8px;
+      }
+      .app-container {
+        height: 98vh;
+        max-height: none;
+        border-radius: 16px;
+      }
+      .sidebar {
+        width: 200px;
+        min-width: 160px;
+      }
+      .right-panel {
+        width: 200px;
+        min-width: 160px;
+      }
+      .stickers-grid {
+        grid-template-columns: repeat(3, 1fr);
+      }
+      .chat-item {
+        padding: 10px 12px;
+      }
+      .chat-item .chat-avatar {
+        width: 38px;
+        height: 38px;
+        font-size: 16px;
+      }
+      .chat-item .chat-name {
+        font-size: 14px;
+      }
+      .message {
+        max-width: 85%;
       }
     }
   </style>
@@ -630,106 +754,108 @@
   <div class="app-header">
     <h1><span>🍓</span> Ягодка</h1>
     <div class="header-actions">
-      <button id="clearAllBtn">🗑️ Очистить</button>
+      <button id="clearAllBtn">🗑️ Очистить всё</button>
       <span id="unreadBadge" class="badge" style="display:none;">0</span>
     </div>
   </div>
 
-  <!-- Основное содержимое -->
+  <!-- Основное содержимое (3 колонки) -->
   <div class="main-content">
-    <!-- Вкладка: Чаты -->
-    <div class="tab-content active" id="tabChats">
+    <!-- Левая панель: Чаты -->
+    <div class="sidebar">
+      <div class="sidebar-header">
+        <span>💬 Чаты</span>
+        <button class="new-chat-btn" id="newChatBtn">+ Новый</button>
+      </div>
       <div class="chat-list" id="chatList"></div>
     </div>
 
-    <!-- Вкладка: Профиль -->
-    <div class="tab-content" id="tabProfile">
-      <div class="profile-content">
-        <div class="profile-avatar">🍓</div>
-        <div class="profile-name" id="profileName">Я</div>
-        <div class="profile-status">🍒 Онлайн</div>
-
-        <div class="profile-stats">
-          <div class="stat">
-            <div class="num" id="statMessages">0</div>
-            <div class="label">Сообщений</div>
-          </div>
-          <div class="stat">
-            <div class="num" id="statChats">0</div>
-            <div class="label">Чатов</div>
-          </div>
-          <div class="stat">
-            <div class="num" id="statStickers">0</div>
-            <div class="label">Стикеров</div>
+    <!-- Центральная панель: Чат -->
+    <div class="chat-panel" id="chatPanel">
+      <div class="chat-panel-empty" id="emptyState">
+        <div class="big-icon">🍓</div>
+        <h2>Добро пожаловать!</h2>
+        <p>Выберите чат слева или создайте новый</p>
+      </div>
+      <div id="chatActive" style="display:none;flex-direction:column;height:100%;">
+        <div class="chat-panel-header">
+          <div class="chat-avatar-small" id="panelAvatar">🍓</div>
+          <div>
+            <div class="chat-title" id="panelTitle">Чат</div>
+            <div class="chat-status" id="panelStatus">онлайн</div>
           </div>
         </div>
-
-        <div class="profile-field">
-          <span class="label">👤 Имя</span>
-          <input type="text" id="profileUsername" placeholder="Ваше имя" maxlength="20" />
+        <div class="messages-area" id="messagesArea"></div>
+        <div class="input-area">
+          <button class="sticker-btn" id="openStickersBtn">😊</button>
+          <input type="text" id="chatInput" placeholder="Напишите сообщение..." maxlength="300" />
+          <button id="chatSendBtn">🍒 Отправить</button>
         </div>
-
-        <div class="profile-field">
-          <span class="label">🆔 ID</span>
-          <span class="value" id="profileId">#yagodka-user</span>
-        </div>
-
-        <button class="profile-btn" id="profileSaveBtn">💾 Сохранить</button>
-        <button class="profile-btn-outline" id="profileExportBtn">📤 Экспорт истории</button>
-        <button class="profile-btn-outline" id="profileImportBtn" style="margin-top:4px;">📥 Импорт истории</button>
-        <input type="file" id="importFileInput" accept=".json" style="display:none;" />
       </div>
     </div>
 
-    <!-- Вкладка: Стикеры -->
-    <div class="tab-content" id="tabStickers">
-      <div class="stickers-content">
-        <div class="sticker-category">🍓 Ягодные</div>
-        <div class="stickers-grid" id="stickerGrid1"></div>
-
-        <div class="sticker-category">😊 Смайлы</div>
-        <div class="stickers-grid" id="stickerGrid2"></div>
-
-        <div class="sticker-category">❤️ Сердечки</div>
-        <div class="stickers-grid" id="stickerGrid3"></div>
-
-        <div class="sticker-category">🎉 Праздничные</div>
-        <div class="stickers-grid" id="stickerGrid4"></div>
+    <!-- Правая панель: Стикеры + Профиль -->
+    <div class="right-panel">
+      <div class="right-panel-tabs">
+        <button class="active" data-rtab="stickers">😊 Стикеры</button>
+        <button data-rtab="profile">👤 Профиль</button>
       </div>
-    </div>
+      <div class="right-panel-content">
+        <!-- Вкладка: Стикеры -->
+        <div class="right-tab active" id="rtab-stickers">
+          <div class="sticker-category">🍓 Ягодные</div>
+          <div class="stickers-grid" id="stickerGrid1"></div>
 
-    <!-- Окно чата -->
-    <div class="chat-window" id="chatWindow">
-      <div class="chat-window-header">
-        <button class="back-btn" id="chatBackBtn">‹</button>
-        <div>
-          <div class="chat-title" id="chatWindowTitle">Чат</div>
-          <div class="chat-status" id="chatWindowStatus">онлайн</div>
+          <div class="sticker-category">😊 Смайлы</div>
+          <div class="stickers-grid" id="stickerGrid2"></div>
+
+          <div class="sticker-category">❤️ Сердечки</div>
+          <div class="stickers-grid" id="stickerGrid3"></div>
+
+          <div class="sticker-category">🎉 Праздничные</div>
+          <div class="stickers-grid" id="stickerGrid4"></div>
+        </div>
+
+        <!-- Вкладка: Профиль -->
+        <div class="right-tab" id="rtab-profile">
+          <div class="profile-content">
+            <div class="profile-avatar">🍓</div>
+            <div class="profile-name" id="profileName">Я</div>
+            <div class="profile-status">🍒 Онлайн</div>
+
+            <div class="profile-stats">
+              <div class="stat">
+                <div class="num" id="statMessages">0</div>
+                <div class="label">Сообщений</div>
+              </div>
+              <div class="stat">
+                <div class="num" id="statChats">0</div>
+                <div class="label">Чатов</div>
+              </div>
+              <div class="stat">
+                <div class="num" id="statStickers">0</div>
+                <div class="label">Стикеров</div>
+              </div>
+            </div>
+
+            <div class="profile-field">
+              <span class="label">👤 Имя</span>
+              <input type="text" id="profileUsername" placeholder="Ваше имя" maxlength="20" />
+            </div>
+
+            <div class="profile-field">
+              <span class="label">🆔 ID</span>
+              <span class="value" id="profileId">#yagodka-user</span>
+            </div>
+
+            <button class="profile-btn" id="profileSaveBtn">💾 Сохранить</button>
+            <button class="profile-btn-outline" id="profileExportBtn">📤 Экспорт истории</button>
+            <button class="profile-btn-outline" id="profileImportBtn">📥 Импорт истории</button>
+            <input type="file" id="importFileInput" accept=".json" style="display:none;" />
+          </div>
         </div>
       </div>
-      <div class="messages-area" id="chatMessages"></div>
-      <div class="input-area">
-        <button class="sticker-btn" id="openStickersBtn">😊</button>
-        <input type="text" id="chatInput" placeholder="Сообщение..." maxlength="300" />
-        <button id="chatSendBtn">🍒 Отправить</button>
-      </div>
     </div>
-  </div>
-
-  <!-- Нижняя навигация -->
-  <div class="bottom-nav">
-    <button class="active" data-tab="tabChats">
-      <span class="nav-icon">💬</span>
-      Чаты
-    </button>
-    <button data-tab="tabStickers">
-      <span class="nav-icon">😊</span>
-      Стикеры
-    </button>
-    <button data-tab="tabProfile">
-      <span class="nav-icon">👤</span>
-      Профиль
-    </button>
   </div>
 </div>
 
@@ -749,13 +875,14 @@
 
     // ----- Элементы -----
     const chatList = document.getElementById('chatList');
-    const chatWindow = document.getElementById('chatWindow');
-    const chatMessages = document.getElementById('chatMessages');
+    const messagesArea = document.getElementById('messagesArea');
     const chatInput = document.getElementById('chatInput');
     const chatSendBtn = document.getElementById('chatSendBtn');
-    const chatBackBtn = document.getElementById('chatBackBtn');
-    const chatWindowTitle = document.getElementById('chatWindowTitle');
-    const chatWindowStatus = document.getElementById('chatWindowStatus');
+    const panelTitle = document.getElementById('panelTitle');
+    const panelStatus = document.getElementById('panelStatus');
+    const panelAvatar = document.getElementById('panelAvatar');
+    const emptyState = document.getElementById('emptyState');
+    const chatActive = document.getElementById('chatActive');
     const openStickersBtn = document.getElementById('openStickersBtn');
 
     const usernameInput = document.getElementById('profileUsername');
@@ -770,18 +897,19 @@
     const profileExportBtn = document.getElementById('profileExportBtn');
     const profileImportBtn = document.getElementById('profileImportBtn');
     const importFileInput = document.getElementById('importFileInput');
+    const newChatBtn = document.getElementById('newChatBtn');
 
-    const navButtons = document.querySelectorAll('.bottom-nav button');
-    const tabContents = {
-      tabChats: document.getElementById('tabChats'),
-      tabStickers: document.getElementById('tabStickers'),
-      tabProfile: document.getElementById('tabProfile')
+    const rightTabs = document.querySelectorAll('.right-panel-tabs button');
+    const rightContents = {
+      stickers: document.getElementById('rtab-stickers'),
+      profile: document.getElementById('rtab-profile')
     };
 
-    // ----- Загрузка данных -----
+    // ----- Состояние -----
     let currentUser = localStorage.getItem(USER_KEY) || 'Я';
-    let currentChat = null; // Имя чата, в котором мы сейчас
+    let currentChat = null;
 
+    // ----- Работа с данными -----
     function loadData() {
       try {
         const raw = localStorage.getItem(STORAGE_KEY);
@@ -831,7 +959,7 @@
       updateUI();
     }
 
-    // ----- Создание чатов по умолчанию -----
+    // ----- Инициализация чатов по умолчанию -----
     function initDefaultChats() {
       const data = loadData();
       const defaultChats = ['🍓 Ягодка', '🌸 Цветочки', '🌿 Зелёный', '☀️ Солнышко'];
@@ -841,7 +969,6 @@
         if (!data.chats[name]) {
           data.chats[name] = [];
           changed = true;
-          // Добавляем приветственное сообщение
           if (name === '🍓 Ягодка') {
             data.chats[name].push({ user: 'Ягодка', text: '🍓 Добро пожаловать в Ягодку!', timestamp: Date.now() - 60000 });
           } else {
@@ -855,6 +982,39 @@
 
     initDefaultChats();
 
+    // ----- Форматирование -----
+    function formatTime(timestamp) {
+      if (!timestamp) return '';
+      const date = new Date(timestamp);
+      return date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+    }
+
+    function formatDate(timestamp) {
+      const date = new Date(timestamp);
+      const now = new Date();
+      const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+      const yesterday = new Date(today);
+      yesterday.setDate(yesterday.getDate() - 1);
+
+      const msgDate = new Date(date.getFullYear(), date.getMonth(), date.getDate());
+
+      if (msgDate.getTime() === today.getTime()) return 'Сегодня';
+      if (msgDate.getTime() === yesterday.getTime()) return 'Вчера';
+      return date.toLocaleDateString('ru-RU', { day: 'numeric', month: 'long' });
+    }
+
+    function isEmoji(str) {
+      if (!str || str.length > 4) return false;
+      const emojiRegex = /^[\u{1F000}-\u{1FFFF}]|[\u2600-\u{27BF}]|[\u{FE00}-\u{FEFF}]|[\u{1F600}-\u{1F64F}]|[\u{1F300}-\u{1F5FF}]|[\u{1F680}-\u{1F6FF}]|[\u{1F700}-\u{1F77F}]|[\u{1F780}-\u{1F7FF}]|[\u{1F800}-\u{1F8FF}]|[\u{1F900}-\u{1F9FF}]|[\u{1FA00}-\u{1FA6F}]|[\u{1FA70}-\u{1FAFF}]|[\u{2700}-\u{27BF}]|[\u{2600}-\u{26FF}]|[\u{2300}-\u{23FF}]|[\u{1F1E0}-\u{1F1FF}]$/u;
+      return emojiRegex.test(str);
+    }
+
+    function escapeHtml(str) {
+      const div = document.createElement('div');
+      div.textContent = str;
+      return div.innerHTML;
+    }
+
     // ----- Рендер списка чатов -----
     function renderChatList() {
       const data = loadData();
@@ -863,10 +1023,10 @@
 
       if (chatNames.length === 0) {
         chatList.innerHTML = `
-          <div style="text-align:center;padding:40px 20px;color:#7a4a5a;">
-            <div style="font-size:48px;margin-bottom:12px;">🍓</div>
-            <div style="font-weight:600;font-size:18px;">Нет чатов</div>
-            <div style="font-size:14px;opacity:0.7;">Создайте первый чат!</div>
+          <div style="text-align:center;padding:30px 16px;color:#7a4a5a;">
+            <div style="font-size:40px;margin-bottom:8px;">🍓</div>
+            <div style="font-weight:600;">Нет чатов</div>
+            <div style="font-size:13px;opacity:0.7;">Создайте первый чат</div>
           </div>
         `;
         return;
@@ -876,9 +1036,10 @@
         const messages = data.chats[name] || [];
         const lastMsg = messages[messages.length - 1];
         const unread = getUnreadCount(name);
+        const isActive = name === currentChat;
 
         const div = document.createElement('div');
-        div.className = 'chat-item';
+        div.className = `chat-item${isActive ? ' active' : ''}`;
         div.dataset.chat = name;
 
         const avatar = document.createElement('div');
@@ -894,7 +1055,12 @@
 
         const lastMsgSpan = document.createElement('div');
         lastMsgSpan.className = 'chat-last-msg';
-        lastMsgSpan.textContent = lastMsg ? lastMsg.text : 'Нет сообщений';
+        if (lastMsg) {
+          const text = lastMsg.text || '';
+          lastMsgSpan.textContent = text.length > 30 ? text.slice(0, 30) + '...' : text;
+        } else {
+          lastMsgSpan.textContent = 'Нет сообщений';
+        }
 
         info.appendChild(nameSpan);
         info.appendChild(lastMsgSpan);
@@ -927,50 +1093,30 @@
       updateUnreadBadge();
     }
 
-    // ----- Форматирование времени -----
-    function formatTime(timestamp) {
-      if (!timestamp) return '';
-      const date = new Date(timestamp);
-      return date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-    }
-
-    function formatDate(timestamp) {
-      const date = new Date(timestamp);
-      const now = new Date();
-      const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
-      const yesterday = new Date(today);
-      yesterday.setDate(yesterday.getDate() - 1);
-
-      const msgDate = new Date(date.getFullYear(), date.getMonth(), date.getDate());
-
-      if (msgDate.getTime() === today.getTime()) return 'Сегодня';
-      if (msgDate.getTime() === yesterday.getTime()) return 'Вчера';
-      return date.toLocaleDateString('ru-RU', { day: 'numeric', month: 'long' });
-    }
-
     // ----- Открыть чат -----
     function openChat(chatName) {
       currentChat = chatName;
-      chatWindow.classList.add('open');
-      chatWindowTitle.textContent = chatName;
-      chatWindowStatus.textContent = 'онлайн';
-
       markAsRead(chatName);
-      renderChatMessages(chatName);
+
+      emptyState.style.display = 'none';
+      chatActive.style.display = 'flex';
+
+      const data = loadData();
+      const messages = data.chats[chatName] || [];
+
+      panelTitle.textContent = chatName;
+      panelStatus.textContent = 'онлайн';
+      panelAvatar.textContent = chatName.charAt(0) || '🍓';
+
+      renderMessages(chatName);
       chatInput.focus();
       updateUI();
     }
 
-    function closeChat() {
-      chatWindow.classList.remove('open');
-      currentChat = null;
-      renderChatList();
-    }
-
-    // ----- Рендер сообщений чата -----
-    function renderChatMessages(chatName) {
+    // ----- Рендер сообщений -----
+    function renderMessages(chatName) {
       const messages = getChatMessages(chatName);
-      chatMessages.innerHTML = '';
+      messagesArea.innerHTML = '';
 
       let lastDate = '';
 
@@ -979,9 +1125,9 @@
 
         if (msgDate !== lastDate) {
           const divider = document.createElement('div');
-          divider.style.cssText = 'text-align:center;font-size:11px;color:#7a4a5a;padding:8px 0 4px;';
-          divider.innerHTML = `<span style="background:rgba(255,255,255,0.5);padding:2px 14px;border-radius:20px;">${msgDate}</span>`;
-          chatMessages.appendChild(divider);
+          divider.className = 'date-divider';
+          divider.innerHTML = `<span>${msgDate}</span>`;
+          messagesArea.appendChild(divider);
           lastDate = msgDate;
         }
 
@@ -999,8 +1145,8 @@
         const textSpan = document.createElement('div');
         textSpan.className = 'msg-text';
 
-        // Проверяем, стикер ли это (один эмодзи в сообщении)
-        if (msg.text && msg.text.length <= 2 && isEmoji(msg.text)) {
+        // Проверяем, стикер ли это
+        if (msg.text && isEmoji(msg.text)) {
           textSpan.className = 'sticker-emoji';
           textSpan.textContent = msg.text;
         } else {
@@ -1009,27 +1155,16 @@
 
         div.appendChild(userSpan);
         div.appendChild(textSpan);
-        chatMessages.appendChild(div);
+        messagesArea.appendChild(div);
       });
 
-      chatMessages.scrollTop = chatMessages.scrollHeight;
-    }
-
-    function isEmoji(str) {
-      const emojiRegex = /^[\u{1F000}-\u{1FFFF}]|[\u2600-\u27BF]|[\u{FE00}-\u{FEFF}]|[\u{1F600}-\u{1F64F}]|[\u{1F300}-\u{1F5FF}]|[\u{1F680}-\u{1F6FF}]|[\u{1F700}-\u{1F77F}]|[\u{1F780}-\u{1F7FF}]|[\u{1F800}-\u{1F8FF}]|[\u{1F900}-\u{1F9FF}]|[\u{1FA00}-\u{1FA6F}]|[\u{1FA70}-\u{1FAFF}]|[\u{2700}-\u{27BF}]|[\u{2600}-\u{26FF}]|[\u{2300}-\u{23FF}]$/u;
-      return emojiRegex.test(str);
-    }
-
-    function escapeHtml(str) {
-      const div = document.createElement('div');
-      div.textContent = str;
-      return div.innerHTML;
+      messagesArea.scrollTop = messagesArea.scrollHeight;
     }
 
     // ----- Отправка сообщения -----
     function sendMessageToChat(chatName) {
       const text = chatInput.value.trim();
-      if (!text) return;
+      if (!text || !chatName) return;
 
       const messages = getChatMessages(chatName);
       messages.push({
@@ -1040,17 +1175,24 @@
       saveChatMessages(chatName, messages);
 
       chatInput.value = '';
-      renderChatMessages(chatName);
+      renderMessages(chatName);
       updateUI();
-
-      // Если мы не в этом чате, увеличиваем счётчик непрочитанных
-      if (currentChat !== chatName) {
-        incrementUnread(chatName);
-      }
+      renderChatList();
     }
 
     // ----- Отправка стикера -----
     function sendSticker(chatName, sticker) {
+      if (!chatName) {
+        const data = loadData();
+        const chatNames = Object.keys(data.chats);
+        if (chatNames.length === 0) {
+          alert('Сначала создайте чат!');
+          return;
+        }
+        chatName = chatNames[0];
+        openChat(chatName);
+      }
+
       const messages = getChatMessages(chatName);
       messages.push({
         user: currentUser || 'Я',
@@ -1058,9 +1200,11 @@
         timestamp: Date.now()
       });
       saveChatMessages(chatName, messages);
-      renderChatMessages(chatName);
+      renderMessages(chatName);
       updateUI();
+      renderChatList();
 
+      // Если чат не активен, увеличиваем счётчик
       if (currentChat !== chatName) {
         incrementUnread(chatName);
       }
@@ -1079,27 +1223,16 @@
           const div = document.createElement('div');
           div.className = 'sticker-item';
           div.textContent = sticker;
+          div.title = `Отправить ${sticker}`;
           div.addEventListener('click', () => {
-            if (currentChat) {
-              sendSticker(currentChat, sticker);
-            } else {
-              // Если чат не открыт, отправляем в первый чат
-              const data = loadData();
-              const chatNames = Object.keys(data.chats);
-              if (chatNames.length > 0) {
-                sendSticker(chatNames[0], sticker);
-                openChat(chatNames[0]);
-              } else {
-                alert('Сначала создайте чат!');
-              }
-            }
+            sendSticker(currentChat, sticker);
           });
           grid.appendChild(div);
         });
       });
     }
 
-    // ----- Обновление UI (профиль, статистика, бейджи) -----
+    // ----- Обновление UI -----
     function updateUI() {
       const data = loadData();
       const chatNames = Object.keys(data.chats);
@@ -1132,6 +1265,29 @@
       }
     }
 
+    // ----- Создание нового чата -----
+    function createNewChat() {
+      const name = prompt('🍓 Введите название нового чата:');
+      if (!name || name.trim() === '') return;
+      const chatName = name.trim();
+
+      const data = loadData();
+      if (data.chats[chatName]) {
+        alert('Чат с таким именем уже существует!');
+        return;
+      }
+
+      data.chats[chatName] = [];
+      data.chats[chatName].push({
+        user: 'Ягодка',
+        text: `🍓 Добро пожаловать в чат "${chatName}"!`,
+        timestamp: Date.now()
+      });
+      saveData(data);
+      openChat(chatName);
+      updateUI();
+    }
+
     // ----- Очистка всех чатов -----
     function clearAllChats() {
       if (confirm('🧹 Очистить все чаты?')) {
@@ -1143,13 +1299,13 @@
         data.unread = {};
         saveData(data);
         if (currentChat) {
-          renderChatMessages(currentChat);
+          renderMessages(currentChat);
         }
         updateUI();
       }
     }
 
-    // ----- Экспорт истории -----
+    // ----- Экспорт/Импорт -----
     function exportHistory() {
       const data = loadData();
       const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
@@ -1161,7 +1317,6 @@
       URL.revokeObjectURL(url);
     }
 
-    // ----- Импорт истории -----
     function importHistory(file) {
       const reader = new FileReader();
       reader.onload = (e) => {
@@ -1170,7 +1325,7 @@
           if (data.chats && typeof data.chats === 'object') {
             saveData(data);
             if (currentChat) {
-              renderChatMessages(currentChat);
+              renderMessages(currentChat);
             }
             updateUI();
             alert('✅ История успешно импортирована!');
@@ -1184,28 +1339,19 @@
       reader.readAsText(file);
     }
 
-    // ----- Навигация (вкладки) -----
-    function switchTab(tabId) {
-      // Скрыть все вкладки
-      Object.keys(tabContents).forEach(key => {
-        tabContents[key].classList.remove('active');
+    // ----- Переключение правой панели -----
+    function switchRightTab(tabId) {
+      rightTabs.forEach(btn => {
+        btn.classList.toggle('active', btn.dataset.rtab === tabId);
       });
-      // Показать нужную
-      if (tabContents[tabId]) {
-        tabContents[tabId].classList.add('active');
-      }
-      // Обновить кнопки
-      navButtons.forEach(btn => {
-        btn.classList.toggle('active', btn.dataset.tab === tabId);
+      Object.keys(rightContents).forEach(key => {
+        rightContents[key].classList.toggle('active', key === tabId);
       });
     }
 
-    navButtons.forEach(btn => {
+    rightTabs.forEach(btn => {
       btn.addEventListener('click', () => {
-        const tabId = btn.dataset.tab;
-        if (tabId) {
-          switchTab(tabId);
-        }
+        switchRightTab(btn.dataset.rtab);
       });
     });
 
@@ -1221,11 +1367,11 @@
       }
     });
 
-    chatBackBtn.addEventListener('click', closeChat);
-
     openStickersBtn.addEventListener('click', () => {
-      switchTab('tabStickers');
+      switchRightTab('stickers');
     });
+
+    newChatBtn.addEventListener('click', createNewChat);
 
     clearAllBtn.addEventListener('click', clearAllChats);
 
@@ -1234,7 +1380,7 @@
       currentUser = val;
       localStorage.setItem(USER_KEY, val);
       updateUI();
-      if (currentChat) renderChatMessages(currentChat);
+      if (currentChat) renderMessages(currentChat);
     });
 
     usernameInput.addEventListener('change', () => {
@@ -1242,7 +1388,7 @@
       currentUser = val;
       localStorage.setItem(USER_KEY, val);
       updateUI();
-      if (currentChat) renderChatMessages(currentChat);
+      if (currentChat) renderMessages(currentChat);
     });
 
     profileExportBtn.addEventListener('click', exportHistory);
@@ -1260,23 +1406,27 @@
 
     // ----- Инициализация -----
     renderStickers();
-    updateUI();
 
-    // Открываем первый чат по умолчанию
+    // Открываем первый чат
     const data = loadData();
     const chatNames = Object.keys(data.chats);
     if (chatNames.length > 0) {
       openChat(chatNames[0]);
+    } else {
+      emptyState.style.display = 'flex';
+      chatActive.style.display = 'none';
     }
 
-    // Обновляем при изменении в других вкладках
+    updateUI();
+
+    // Обновление при изменении в других вкладках
     window.addEventListener('storage', (e) => {
       if (e.key === STORAGE_KEY || e.key === USER_KEY) {
         if (e.key === USER_KEY) {
           currentUser = e.newValue || 'Я';
         }
         updateUI();
-        if (currentChat) renderChatMessages(currentChat);
+        if (currentChat) renderMessages(currentChat);
       }
     });
 
