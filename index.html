@@ -5,251 +5,351 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>🍓 Ягодка — мессенджер</title>
   <style>
-    /* ---------- Ягодный стиль ---------- */
+    /* ---------- Telegram-style ---------- */
     * {
       margin: 0;
       padding: 0;
       box-sizing: border-box;
-      font-family: 'Segoe UI', Roboto, system-ui, sans-serif;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
     }
 
     body {
-      background: linear-gradient(145deg, #fce4ec 0%, #f8bbd0 100%);
+      background: #0f0f0f;
       min-height: 100vh;
       display: flex;
       justify-content: center;
       align-items: center;
-      padding: 16px;
+      padding: 12px;
     }
 
     .chat-container {
-      max-width: 600px;
+      max-width: 480px;
       width: 100%;
-      height: 90vh;
-      max-height: 700px;
-      background: rgba(255, 245, 247, 0.8);
-      backdrop-filter: blur(8px);
-      border-radius: 48px 48px 32px 32px;
-      box-shadow: 0 20px 40px rgba(180, 60, 80, 0.25),
-                  inset 0 1px 4px rgba(255, 255, 255, 0.6);
+      height: 92vh;
+      max-height: 820px;
+      background: #ffffff;
+      border-radius: 28px;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
       display: flex;
       flex-direction: column;
       overflow: hidden;
-      border: 2px solid rgba(255, 255, 255, 0.5);
+      position: relative;
     }
 
-    /* ----- Шапка ----- */
+    /* ----- Шапка (как в TG) ----- */
     .chat-header {
-      background: linear-gradient(135deg, #d81b60, #ad1457);
-      padding: 20px 24px 16px;
-      color: white;
+      background: #ffffff;
+      padding: 16px 20px 12px;
+      border-bottom: 1px solid #e9e9e9;
       display: flex;
       justify-content: space-between;
       align-items: center;
       flex-wrap: wrap;
-      gap: 10px;
-      border-bottom: 3px solid #f06292;
+      gap: 8px;
+      flex-shrink: 0;
     }
 
-    .chat-header h1 {
-      font-size: 24px;
+    .header-left {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .avatar-circle {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #4facfe, #00f2fe);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
       font-weight: 700;
-      letter-spacing: 0.5px;
+      font-size: 18px;
+      flex-shrink: 0;
+      user-select: none;
+    }
+
+    .chat-title {
+      font-size: 18px;
+      font-weight: 600;
+      color: #1a1a1a;
+      line-height: 1.2;
+    }
+
+    .chat-subtitle {
+      font-size: 12px;
+      color: #8e8e8e;
+      font-weight: 400;
+    }
+
+    .header-right {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .header-right .user-controls {
       display: flex;
       align-items: center;
       gap: 8px;
-    }
-
-    .chat-header h1 span {
-      font-size: 28px;
-    }
-
-    .user-controls {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      flex-wrap: wrap;
-    }
-
-    .user-controls label {
-      font-size: 13px;
-      font-weight: 500;
-      opacity: 0.9;
-    }
-
-    .user-controls input {
-      background: rgba(255, 255, 255, 0.2);
-      border: 1px solid rgba(255, 255, 255, 0.3);
+      background: #f0f0f0;
+      padding: 4px 12px 4px 16px;
       border-radius: 30px;
-      padding: 6px 14px;
-      color: white;
+    }
+
+    .header-right .user-controls label {
+      font-size: 12px;
+      color: #5e5e5e;
+      font-weight: 500;
+    }
+
+    .header-right .user-controls input {
+      background: transparent;
+      border: none;
+      padding: 6px 0;
       font-size: 14px;
+      color: #1a1a1a;
       outline: none;
-      width: 120px;
-      transition: 0.2s;
+      width: 100px;
+      font-weight: 500;
     }
 
-    .user-controls input::placeholder {
-      color: rgba(255, 255, 255, 0.6);
-    }
-    .user-controls input:focus {
-      background: rgba(255, 255, 255, 0.35);
-      border-color: white;
+    .header-right .user-controls input::placeholder {
+      color: #b0b0b0;
     }
 
-    /* ----- Окно сообщений ----- */
+    /* ----- Окно сообщений (как в TG) ----- */
     .messages-area {
       flex: 1;
-      padding: 20px 16px 8px;
+      padding: 12px 16px 8px;
       overflow-y: auto;
       display: flex;
       flex-direction: column;
-      gap: 8px;
-      background: rgba(255, 240, 245, 0.3);
+      gap: 4px;
+      background: #f5f7fa;
     }
 
-    /* Сообщение */
+    /* Сообщение — как в Telegram */
     .message {
-      max-width: 80%;
-      padding: 10px 16px;
-      border-radius: 24px 24px 24px 6px;
-      background: white;
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+      max-width: 82%;
+      padding: 8px 14px;
+      border-radius: 16px 16px 16px 6px;
+      background: #ffffff;
+      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.06);
       align-self: flex-start;
       word-break: break-word;
-      border: 1px solid rgba(255, 255, 255, 0.5);
-      animation: fadeUp 0.25s ease;
+      position: relative;
+      animation: fadeUp 0.2s ease;
+      border: 1px solid rgba(0, 0, 0, 0.02);
     }
 
+    /* Своё сообщение (синее, как в TG) */
     .message.own {
       align-self: flex-end;
-      background: linear-gradient(135deg, #f06292, #ec407a);
-      color: white;
-      border-radius: 24px 24px 6px 24px;
+      background: #e1f3ff;
+      border-radius: 16px 16px 6px 16px;
+      border-color: rgba(79, 172, 254, 0.1);
     }
 
     .message .msg-user {
       font-weight: 600;
-      font-size: 14px;
-      color: #880e4f;
-      margin-bottom: 2px;
+      font-size: 13px;
+      color: #2b6b9e;
+      margin-bottom: 1px;
       display: flex;
       justify-content: space-between;
+      align-items: center;
       gap: 12px;
     }
 
     .message.own .msg-user {
-      color: #fce4ec;
-    }
-
-    .message .msg-time {
-      font-size: 10px;
-      opacity: 0.7;
-      font-weight: 400;
+      color: #1a6bb0;
     }
 
     .message .msg-text {
       font-size: 15px;
-      line-height: 1.4;
+      line-height: 1.45;
+      color: #1a1a1a;
+      margin-bottom: 2px;
     }
 
-    /* ----- Ввод ----- */
+    .message .msg-time {
+      font-size: 10px;
+      color: #8e8e8e;
+      font-weight: 400;
+      margin-top: 2px;
+      text-align: right;
+      letter-spacing: 0.2px;
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      gap: 4px;
+    }
+
+    .message.own .msg-time {
+      color: #6a8fb0;
+    }
+
+    /* Аватарка в сообщении (как в TG) */
+    .message .msg-avatar {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 11px;
+      font-weight: 600;
+      color: white;
+      flex-shrink: 0;
+      margin-right: 8px;
+      background: #b0b0b0;
+    }
+
+    .message .msg-header {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      margin-bottom: 1px;
+    }
+
+    .message .msg-header .msg-user {
+      font-weight: 600;
+      font-size: 13px;
+      color: #2b6b9e;
+    }
+
+    /* ----- Дата-разделитель (как в TG) ----- */
+    .date-divider {
+      text-align: center;
+      font-size: 11px;
+      color: #8e8e8e;
+      padding: 10px 0 6px;
+      font-weight: 500;
+      letter-spacing: 0.3px;
+    }
+
+    .date-divider span {
+      background: #e9edf2;
+      padding: 4px 16px;
+      border-radius: 30px;
+      color: #5e5e5e;
+    }
+
+    /* ----- Ввод (как в TG) ----- */
     .input-area {
-      padding: 16px 20px 20px;
-      background: rgba(255, 255, 255, 0.5);
-      backdrop-filter: blur(4px);
-      border-top: 1px solid rgba(255, 255, 255, 0.5);
+      padding: 12px 16px 14px;
+      background: #ffffff;
+      border-top: 1px solid #e9e9e9;
       display: flex;
       gap: 10px;
       align-items: center;
-      flex-wrap: wrap;
+      flex-shrink: 0;
     }
 
     .input-area input[type="text"] {
       flex: 1;
-      min-width: 140px;
-      padding: 12px 18px;
+      padding: 10px 16px;
       border: none;
-      border-radius: 40px;
-      background: white;
-      box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.04);
+      border-radius: 24px;
+      background: #f0f2f5;
       font-size: 15px;
-      outline: 2px solid transparent;
+      outline: none;
       transition: 0.2s;
+      color: #1a1a1a;
     }
 
     .input-area input[type="text"]:focus {
-      outline: 2px solid #ec407a;
+      background: #e8ecf1;
+    }
+
+    .input-area input[type="text"]::placeholder {
+      color: #a8a8a8;
     }
 
     .input-area button {
-      background: linear-gradient(135deg, #d81b60, #ad1457);
+      background: #4facfe;
       border: none;
       color: white;
-      padding: 12px 24px;
-      border-radius: 40px;
+      padding: 10px 22px;
+      border-radius: 30px;
       font-weight: 600;
       font-size: 15px;
       cursor: pointer;
-      transition: 0.2s;
-      box-shadow: 0 4px 12px rgba(216, 27, 96, 0.3);
+      transition: 0.15s;
+      box-shadow: 0 2px 8px rgba(79, 172, 254, 0.25);
+      white-space: nowrap;
       display: flex;
       align-items: center;
       gap: 6px;
-      white-space: nowrap;
     }
 
     .input-area button:hover {
       transform: scale(1.02);
-      box-shadow: 0 6px 16px rgba(216, 27, 96, 0.4);
+      background: #3d9eff;
     }
 
     .input-area button:active {
-      transform: scale(0.97);
+      transform: scale(0.96);
     }
 
-    /* Анимация */
+    /* ----- Анимация ----- */
     @keyframes fadeUp {
-      0% { opacity: 0; transform: translateY(10px); }
+      0% { opacity: 0; transform: translateY(8px); }
       100% { opacity: 1; transform: translateY(0); }
     }
 
-    /* Скролл */
+    /* ----- Скролл (как в TG) ----- */
     .messages-area::-webkit-scrollbar {
-      width: 5px;
+      width: 4px;
     }
     .messages-area::-webkit-scrollbar-track {
-      background: rgba(0, 0, 0, 0.02);
+      background: transparent;
     }
     .messages-area::-webkit-scrollbar-thumb {
-      background: #f06292;
+      background: #d0d4da;
       border-radius: 10px;
     }
 
-    /* Адаптив */
-    @media (max-width: 480px) {
+    /* ----- Адаптив ----- */
+    @media (max-width: 520px) {
+      body {
+        padding: 0;
+      }
       .chat-container {
-        height: 95vh;
+        height: 100vh;
         max-height: none;
-        border-radius: 24px;
+        border-radius: 0;
       }
       .chat-header {
-        flex-direction: column;
-        align-items: stretch;
-        text-align: center;
+        padding: 12px 14px 10px;
       }
-      .user-controls {
-        justify-content: center;
+      .header-right .user-controls {
+        padding: 2px 8px 2px 12px;
       }
-      .user-controls input {
-        width: 100%;
+      .header-right .user-controls input {
+        width: 70px;
+        font-size: 12px;
+      }
+      .message {
+        max-width: 90%;
       }
       .input-area {
-        flex-direction: column;
+        padding: 10px 12px 14px;
+      }
+    }
+
+    @media (max-width: 400px) {
+      .chat-title {
+        font-size: 15px;
+      }
+      .header-right .user-controls input {
+        width: 50px;
       }
       .input-area button {
-        width: 100%;
-        justify-content: center;
+        padding: 10px 14px;
+        font-size: 13px;
       }
     }
   </style>
@@ -257,12 +357,20 @@
 <body>
 
 <div class="chat-container">
-  <!-- Шапка -->
+  <!-- Шапка (как в Telegram) -->
   <div class="chat-header">
-    <h1><span>🍓</span> Ягодка</h1>
-    <div class="user-controls">
-      <label for="username">👤 Имя</label>
-      <input type="text" id="username" placeholder="Ваше имя" maxlength="20" />
+    <div class="header-left">
+      <div class="avatar-circle">🍓</div>
+      <div>
+        <div class="chat-title">Ягодка</div>
+        <div class="chat-subtitle">🍒 онлайн</div>
+      </div>
+    </div>
+    <div class="header-right">
+      <div class="user-controls">
+        <label for="username">👤</label>
+        <input type="text" id="username" placeholder="Имя" maxlength="20" />
+      </div>
     </div>
   </div>
 
@@ -271,8 +379,8 @@
 
   <!-- Ввод -->
   <div class="input-area">
-    <input type="text" id="msgInput" placeholder="Написать..." maxlength="300" />
-    <button id="sendBtn">🍒 Отправить</button>
+    <input type="text" id="msgInput" placeholder="Сообщение..." maxlength="300" />
+    <button id="sendBtn">➜</button>
   </div>
 </div>
 
@@ -287,6 +395,21 @@
     const STORAGE_KEY = 'yagodka_messages';
     const USER_KEY = 'yagodka_username';
 
+    // ----- Цвета для аватарок -----
+    const colors = [
+      '#FF6B6B', '#4ECDC4', '#45B7D1', '#96CEB4', '#FFEAA7',
+      '#DDA0DD', '#FF8A5C', '#A29BFE', '#FD79A8', '#00B894',
+      '#6C5CE7', '#FDCB6E', '#E17055', '#00CEC9', '#FD79A8'
+    ];
+
+    function getColorForUser(name) {
+      let hash = 0;
+      for (let i = 0; i < name.length; i++) {
+        hash = name.charCodeAt(i) + ((hash << 5) - hash);
+      }
+      return colors[Math.abs(hash) % colors.length];
+    }
+
     // ----- Загружаем имя -----
     let currentUser = localStorage.getItem(USER_KEY) || 'Я';
     usernameInput.value = currentUser;
@@ -295,9 +418,10 @@
       const val = usernameInput.value.trim() || 'Я';
       currentUser = val;
       localStorage.setItem(USER_KEY, val);
+      render();
     });
 
-    // ----- Загружаем сообщения -----
+    // ----- Работа с сообщениями -----
     function loadMessages() {
       try {
         const raw = localStorage.getItem(STORAGE_KEY);
@@ -311,40 +435,84 @@
       localStorage.setItem(STORAGE_KEY, JSON.stringify(messages));
     }
 
+    // ----- Форматирование даты (как в TG) -----
+    function formatDate(timestamp) {
+      const date = new Date(timestamp);
+      const now = new Date();
+      const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+      const yesterday = new Date(today);
+      yesterday.setDate(yesterday.getDate() - 1);
+
+      const msgDate = new Date(date.getFullYear(), date.getMonth(), date.getDate());
+
+      if (msgDate.getTime() === today.getTime()) return 'Сегодня';
+      if (msgDate.getTime() === yesterday.getTime()) return 'Вчера';
+      return date.toLocaleDateString('ru-RU', { day: 'numeric', month: 'long' });
+    }
+
     // ----- Рендер -----
     function render() {
       const messages = loadMessages();
       messagesArea.innerHTML = '';
-      messages.forEach(msg => {
+
+      let lastDate = '';
+
+      messages.forEach((msg, index) => {
+        const msgDate = formatDate(msg.timestamp || Date.now());
+
+        // Дата-разделитель
+        if (msgDate !== lastDate) {
+          const divider = document.createElement('div');
+          divider.className = 'date-divider';
+          divider.innerHTML = `<span>${msgDate}</span>`;
+          messagesArea.appendChild(divider);
+          lastDate = msgDate;
+        }
+
         const isOwn = msg.user === currentUser;
         const div = document.createElement('div');
         div.className = `message ${isOwn ? 'own' : ''}`;
 
-        const userSpan = document.createElement('div');
-        userSpan.className = 'msg-user';
-        userSpan.innerHTML = `
-          <span>${escapeHtml(msg.user)}</span>
-          <span class="msg-time">${msg.time || ''}</span>
-        `;
+        // Заголовок сообщения (имя + аватарка)
+        const header = document.createElement('div');
+        header.className = 'msg-header';
 
+        if (!isOwn) {
+          const avatar = document.createElement('span');
+          avatar.className = 'msg-avatar';
+          avatar.style.background = getColorForUser(msg.user);
+          avatar.textContent = msg.user.charAt(0).toUpperCase();
+          header.appendChild(avatar);
+        }
+
+        const userName = document.createElement('span');
+        userName.className = 'msg-user';
+        userName.textContent = msg.user;
+        header.appendChild(userName);
+        div.appendChild(header);
+
+        // Текст
         const textSpan = document.createElement('div');
         textSpan.className = 'msg-text';
         textSpan.textContent = msg.text;
-
-        div.appendChild(userSpan);
         div.appendChild(textSpan);
+
+        // Время
+        const timeSpan = document.createElement('div');
+        timeSpan.className = 'msg-time';
+        const time = new Date(msg.timestamp || Date.now());
+        timeSpan.textContent = time.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+
+        // Галочка (для своих сообщений)
+        if (isOwn) {
+          timeSpan.textContent += ' ✓';
+        }
+        div.appendChild(timeSpan);
+
         messagesArea.appendChild(div);
       });
 
-      // Скроллим вниз
       messagesArea.scrollTop = messagesArea.scrollHeight;
-    }
-
-    // Простой экранинг (безопасность)
-    function escapeHtml(str) {
-      const div = document.createElement('div');
-      div.textContent = str;
-      return div.innerHTML;
     }
 
     // ----- Отправка -----
@@ -353,15 +521,13 @@
       if (!text) return;
 
       const user = currentUser || 'Я';
-      const now = new Date();
-      const timeStr = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+      const now = Date.now();
 
       const messages = loadMessages();
       messages.push({
         user: user,
         text: text,
-        time: timeStr,
-        timestamp: now.getTime()
+        timestamp: now
       });
 
       saveMessages(messages);
@@ -383,10 +549,7 @@
     // ----- Старт -----
     render();
 
-    // Автообновление при смене имени (перерендер)
-    usernameInput.addEventListener('change', render);
-
-    // Если кто-то в другом окне поменял данные — перерендер (просто для демо)
+    // Автообновление при изменении в других вкладках
     window.addEventListener('storage', (e) => {
       if (e.key === STORAGE_KEY || e.key === USER_KEY) {
         if (e.key === USER_KEY) {
@@ -397,6 +560,8 @@
       }
     });
 
+    // Фокус на поле ввода при загрузке
+    msgInput.focus();
   })();
 </script>
 </body>
