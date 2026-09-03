@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>🍓 Ягодка — мессенджер</title>
+  <style>
+    /* ---------- Ягодный стиль ---------- */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', Roboto, system-ui, sans-serif;
+    }
+
+    body {
+      background: linear-gradient(145deg, #fce4ec 0%, #f8bbd0 100%);
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 16px;
+    }
+
+    .chat-container {
+      max-width: 600px;
+      width: 100%;
+      height: 90vh;
+      max-height: 700px;
+      background: rgba(255, 245, 247, 0.8);
+      backdrop-filter: blur(8px);
+      border-radius: 48px 48px 32px 32px;
+      box-shadow: 0 20px 40px rgba(180, 60, 80, 0.25),
+                  inset 0 1px 4px rgba(255, 255, 255, 0.6);
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      border: 2px solid rgba(255, 255, 255, 0.5);
+    }
+
+    /* ----- Шапка ----- */
+    .chat-header {
+      background: linear-gradient(135deg, #d81b60, #ad1457);
+      padding: 20px 24px 16px;
+      color: white;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 10px;
+      border-bottom: 3px solid #f06292;
+    }
+
+    .chat-header h1 {
+      font-size: 24px;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .chat-header h1 span {
+      font-size: 28px;
+    }
+
+    .user-controls {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .user-controls label {
+      font-size: 13px;
+      font-weight: 500;
+      opacity: 0.9;
+    }
+
+    .user-controls input {
+      background: rgba(255, 255, 255, 0.2);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      border-radius: 30px;
+      padding: 6px 14px;
+      color: white;
+      font-size: 14px;
+      outline: none;
+      width: 120px;
+      transition: 0.2s;
+    }
+
+    .user-controls input::placeholder {
+      color: rgba(255, 255, 255, 0.6);
+    }
+    .user-controls input:focus {
+      background: rgba(255, 255, 255, 0.35);
+      border-color: white;
+    }
+
+    /* ----- Окно сообщений ----- */
+    .messages-area {
+      flex: 1;
+      padding: 20px 16px 8px;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      background: rgba(255, 240, 245, 0.3);
+    }
+
+    /* Сообщение */
+    .message {
+      max-width: 80%;
+      padding: 10px 16px;
+      border-radius: 24px 24px 24px 6px;
+      background: white;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+      align-self: flex-start;
+      word-break: break-word;
+      border: 1px solid rgba(255, 255, 255, 0.5);
+      animation: fadeUp 0.25s ease;
+    }
+
+    .message.own {
+      align-self: flex-end;
+      background: linear-gradient(135deg, #f06292, #ec407a);
+      color: white;
+      border-radius: 24px 24px 6px 24px;
+    }
+
+    .message .msg-user {
+      font-weight: 600;
+      font-size: 14px;
+      color: #880e4f;
+      margin-bottom: 2px;
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    .message.own .msg-user {
+      color: #fce4ec;
+    }
+
+    .message .msg-time {
+      font-size: 10px;
+      opacity: 0.7;
+      font-weight: 400;
+    }
+
+    .message .msg-text {
+      font-size: 15px;
+      line-height: 1.4;
+    }
+
+    /* ----- Ввод ----- */
+    .input-area {
+      padding: 16px 20px 20px;
+      background: rgba(255, 255, 255, 0.5);
+      backdrop-filter: blur(4px);
+      border-top: 1px solid rgba(255, 255, 255, 0.5);
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .input-area input[type="text"] {
+      flex: 1;
+      min-width: 140px;
+      padding: 12px 18px;
+      border: none;
+      border-radius: 40px;
+      background: white;
+      box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.04);
+      font-size: 15px;
+      outline: 2px solid transparent;
+      transition: 0.2s;
+    }
+
+    .input-area input[type="text"]:focus {
+      outline: 2px solid #ec407a;
+    }
+
+    .input-area button {
+      background: linear-gradient(135deg, #d81b60, #ad1457);
+      border: none;
+      color: white;
+      padding: 12px 24px;
+      border-radius: 40px;
+      font-weight: 600;
+      font-size: 15px;
+      cursor: pointer;
+      transition: 0.2s;
+      box-shadow: 0 4px 12px rgba(216, 27, 96, 0.3);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      white-space: nowrap;
+    }
+
+    .input-area button:hover {
+      transform: scale(1.02);
+      box-shadow: 0 6px 16px rgba(216, 27, 96, 0.4);
+    }
+
+    .input-area button:active {
+      transform: scale(0.97);
+    }
+
+    /* Анимация */
+    @keyframes fadeUp {
+      0% { opacity: 0; transform: translateY(10px); }
+      100% { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Скролл */
+    .messages-area::-webkit-scrollbar {
+      width: 5px;
+    }
+    .messages-area::-webkit-scrollbar-track {
+      background: rgba(0, 0, 0, 0.02);
+    }
+    .messages-area::-webkit-scrollbar-thumb {
+      background: #f06292;
+      border-radius: 10px;
+    }
+
+    /* Адаптив */
+    @media (max-width: 480px) {
+      .chat-container {
+        height: 95vh;
+        max-height: none;
+        border-radius: 24px;
+      }
+      .chat-header {
+        flex-direction: column;
+        align-items: stretch;
+        text-align: center;
+      }
+      .user-controls {
+        justify-content: center;
+      }
+      .user-controls input {
+        width: 100%;
+      }
+      .input-area {
+        flex-direction: column;
+      }
+      .input-area button {
+        width: 100%;
+        justify-content: center;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<div class="chat-container">
+  <!-- Шапка -->
+  <div class="chat-header">
+    <h1><span>🍓</span> Ягодка</h1>
+    <div class="user-controls">
+      <label for="username">👤 Имя</label>
+      <input type="text" id="username" placeholder="Ваше имя" maxlength="20" />
+    </div>
+  </div>
+
+  <!-- Сообщения -->
+  <div class="messages-area" id="messagesArea"></div>
+
+  <!-- Ввод -->
+  <div class="input-area">
+    <input type="text" id="msgInput" placeholder="Написать..." maxlength="300" />
+    <button id="sendBtn">🍒 Отправить</button>
+  </div>
+</div>
+
+<script>
+  (function() {
+    // ----- Элементы -----
+    const messagesArea = document.getElementById('messagesArea');
+    const msgInput = document.getElementById('msgInput');
+    const sendBtn = document.getElementById('sendBtn');
+    const usernameInput = document.getElementById('username');
+
+    const STORAGE_KEY = 'yagodka_messages';
+    const USER_KEY = 'yagodka_username';
+
+    // ----- Загружаем имя -----
+    let currentUser = localStorage.getItem(USER_KEY) || 'Я';
+    usernameInput.value = currentUser;
+
+    usernameInput.addEventListener('change', () => {
+      const val = usernameInput.value.trim() || 'Я';
+      currentUser = val;
+      localStorage.setItem(USER_KEY, val);
+    });
+
+    // ----- Загружаем сообщения -----
+    function loadMessages() {
+      try {
+        const raw = localStorage.getItem(STORAGE_KEY);
+        return raw ? JSON.parse(raw) : [];
+      } catch {
+        return [];
+      }
+    }
+
+    function saveMessages(messages) {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(messages));
+    }
+
+    // ----- Рендер -----
+    function render() {
+      const messages = loadMessages();
+      messagesArea.innerHTML = '';
+      messages.forEach(msg => {
+        const isOwn = msg.user === currentUser;
+        const div = document.createElement('div');
+        div.className = `message ${isOwn ? 'own' : ''}`;
+
+        const userSpan = document.createElement('div');
+        userSpan.className = 'msg-user';
+        userSpan.innerHTML = `
+          <span>${escapeHtml(msg.user)}</span>
+          <span class="msg-time">${msg.time || ''}</span>
+        `;
+
+        const textSpan = document.createElement('div');
+        textSpan.className = 'msg-text';
+        textSpan.textContent = msg.text;
+
+        div.appendChild(userSpan);
+        div.appendChild(textSpan);
+        messagesArea.appendChild(div);
+      });
+
+      // Скроллим вниз
+      messagesArea.scrollTop = messagesArea.scrollHeight;
+    }
+
+    // Простой экранинг (безопасность)
+    function escapeHtml(str) {
+      const div = document.createElement('div');
+      div.textContent = str;
+      return div.innerHTML;
+    }
+
+    // ----- Отправка -----
+    function sendMessage() {
+      const text = msgInput.value.trim();
+      if (!text) return;
+
+      const user = currentUser || 'Я';
+      const now = new Date();
+      const timeStr = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+
+      const messages = loadMessages();
+      messages.push({
+        user: user,
+        text: text,
+        time: timeStr,
+        timestamp: now.getTime()
+      });
+
+      saveMessages(messages);
+      render();
+      msgInput.value = '';
+      msgInput.focus();
+    }
+
+    // ----- Обработчики -----
+    sendBtn.addEventListener('click', sendMessage);
+
+    msgInput.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') {
+        e.preventDefault();
+        sendMessage();
+      }
+    });
+
+    // ----- Старт -----
+    render();
+
+    // Автообновление при смене имени (перерендер)
+    usernameInput.addEventListener('change', render);
+
+    // Если кто-то в другом окне поменял данные — перерендер (просто для демо)
+    window.addEventListener('storage', (e) => {
+      if (e.key === STORAGE_KEY || e.key === USER_KEY) {
+        if (e.key === USER_KEY) {
+          usernameInput.value = e.newValue || 'Я';
+          currentUser = e.newValue || 'Я';
+        }
+        render();
+      }
+    });
+
+  })();
+</script>
+</body>
+</html>
