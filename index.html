@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <title>🍓 Ягодка P2P</title>
+    <title>🍓 Ягодка — Общий чат</title>
     <style>
         * {
             margin: 0;
@@ -22,7 +22,7 @@
         }
 
         .app-container {
-            max-width: 900px;
+            max-width: 700px;
             width: 100%;
             height: 92vh;
             max-height: 750px;
@@ -39,7 +39,7 @@
         /* Шапка */
         .header {
             background: linear-gradient(135deg, #d81b60, #ad1457);
-            padding: 14px 24px;
+            padding: 14px 20px;
             color: white;
             display: flex;
             justify-content: space-between;
@@ -51,7 +51,7 @@
         }
 
         .header h1 {
-            font-size: 22px;
+            font-size: 20px;
             font-weight: 700;
             display: flex;
             align-items: center;
@@ -59,204 +59,46 @@
         }
 
         .header h1 span {
-            font-size: 26px;
+            font-size: 24px;
         }
 
-        .header-right {
+        .header .status {
             display: flex;
             align-items: center;
-            gap: 12px;
-            flex-wrap: wrap;
-        }
-
-        .header-right .my-id {
-            background: rgba(255, 255, 255, 0.2);
-            padding: 4px 16px;
-            border-radius: 30px;
+            gap: 8px;
             font-size: 13px;
-            font-weight: 500;
-            font-family: monospace;
+            background: rgba(255,255,255,0.15);
+            padding: 4px 14px;
+            border-radius: 30px;
         }
 
-        .status-dot {
+        .dot {
             width: 10px;
             height: 10px;
             border-radius: 50%;
             display: inline-block;
-            margin-right: 4px;
         }
 
-        .status-dot.online {
-            background: #4caf50;
-        }
-        .status-dot.offline {
-            background: #888;
-        }
-        .status-dot.connecting {
-            background: #ff9800;
-            animation: blink 0.5s infinite;
-        }
+        .dot.online { background: #4caf50; }
+        .dot.offline { background: #888; }
+        .dot.connecting { background: #ff9800; animation: blink 0.5s infinite; }
 
         @keyframes blink {
             0%, 100% { opacity: 1; }
             50% { opacity: 0.3; }
         }
 
-        /* Основное содержимое */
-        .main-content {
-            flex: 1;
-            display: flex;
-            overflow: hidden;
-        }
-
-        /* Левая панель - контакты */
-        .sidebar {
-            width: 280px;
-            min-width: 220px;
-            background: rgba(255, 240, 245, 0.3);
-            border-right: 1px solid rgba(255, 255, 255, 0.3);
-            display: flex;
-            flex-direction: column;
-            padding: 16px;
-            gap: 12px;
-        }
-
-        .sidebar h3 {
-            font-size: 14px;
-            color: #7a4a5a;
+        .user-name {
             font-weight: 600;
-            letter-spacing: 0.5px;
-        }
-
-        .contact-input-area {
-            display: flex;
-            gap: 8px;
-        }
-
-        .contact-input-area input {
-            flex: 1;
-            padding: 8px 14px;
-            border: 2px solid rgba(216, 27, 96, 0.2);
-            border-radius: 24px;
-            font-size: 14px;
-            outline: none;
-            transition: 0.2s;
-            background: rgba(255, 255, 255, 0.7);
-        }
-
-        .contact-input-area input:focus {
-            border-color: #d81b60;
-            background: white;
-        }
-
-        .contact-input-area button {
-            padding: 8px 16px;
-            border: none;
-            border-radius: 24px;
-            background: linear-gradient(135deg, #d81b60, #ad1457);
-            color: white;
-            font-weight: 600;
-            cursor: pointer;
-            transition: 0.2s;
-            white-space: nowrap;
-        }
-
-        .contact-input-area button:hover {
-            transform: scale(1.02);
-        }
-
-        .contact-input-area button:disabled {
-            opacity: 0.5;
-            cursor: not-allowed;
-        }
-
-        /* Мои контакты */
-        .contact-list {
-            flex: 1;
-            overflow-y: auto;
-            display: flex;
-            flex-direction: column;
-            gap: 4px;
-        }
-
-        .contact-item {
-            padding: 10px 14px;
-            background: rgba(255, 255, 255, 0.5);
-            border-radius: 12px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            transition: 0.2s;
-            border: 1px solid transparent;
-        }
-
-        .contact-item.active {
-            border-color: #d81b60;
-            background: rgba(216, 27, 96, 0.08);
-        }
-
-        .contact-item .name {
-            font-weight: 600;
-            color: #2a0a1a;
             font-size: 14px;
         }
 
-        .contact-item .status {
+        .users-online {
             font-size: 12px;
-            color: #7a4a5a;
+            opacity: 0.8;
         }
 
-        .contact-item .status.online {
-            color: #4caf50;
-        }
-
-        .status-badge {
-            font-size: 11px;
-            padding: 2px 10px;
-            border-radius: 20px;
-            background: #eee;
-            color: #888;
-        }
-
-        .status-badge.online {
-            background: #e8f5e9;
-            color: #2e7d32;
-        }
-
-        .status-badge.offline {
-            background: #f5f5f5;
-            color: #999;
-        }
-
-        /* Центральная панель - чат */
-        .chat-panel {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            background: rgba(255, 245, 247, 0.2);
-        }
-
-        .chat-header {
-            padding: 12px 20px;
-            background: rgba(255, 255, 255, 0.4);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.3);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-shrink: 0;
-        }
-
-        .chat-header .chat-with {
-            font-weight: 600;
-            color: #2a0a1a;
-            font-size: 16px;
-        }
-
-        .chat-header .chat-status {
-            font-size: 13px;
-            color: #7a4a5a;
-        }
-
+        /* Сообщения */
         .messages-area {
             flex: 1;
             padding: 16px 20px;
@@ -264,18 +106,18 @@
             display: flex;
             flex-direction: column;
             gap: 2px;
+            background: rgba(255, 245, 247, 0.15);
         }
 
         .message {
-            max-width: 75%;
+            max-width: 80%;
             padding: 8px 14px;
             border-radius: 18px 18px 18px 4px;
             background: white;
             box-shadow: 0 1px 4px rgba(0,0,0,0.05);
             align-self: flex-start;
             word-break: break-word;
-            animation: fadeUp 0.25s ease;
-            border: 1px solid rgba(255,255,255,0.3);
+            animation: fadeUp 0.2s ease;
         }
 
         .message.own {
@@ -286,10 +128,10 @@
         }
 
         .message .user {
-            font-size: 12px;
+            font-size: 11px;
             font-weight: 600;
             color: #880e4f;
-            margin-bottom: 2px;
+            margin-bottom: 1px;
         }
 
         .message.own .user {
@@ -297,9 +139,9 @@
         }
 
         .message .time {
-            font-size: 10px;
+            font-size: 9px;
             opacity: 0.6;
-            margin-left: 10px;
+            margin-left: 8px;
         }
 
         .message .text {
@@ -308,38 +150,25 @@
         }
 
         .message .sticker {
-            font-size: 44px;
+            font-size: 40px;
             display: block;
             text-align: center;
-            padding: 4px 0;
+            padding: 2px 0;
         }
 
         .message.system {
             align-self: center;
             background: rgba(255,255,255,0.3);
             border: none;
-            font-size: 12px;
+            font-size: 11px;
             color: #7a4a5a;
-            padding: 4px 16px;
+            padding: 3px 16px;
             border-radius: 30px;
             max-width: 90%;
         }
 
         .message.system .text {
-            font-size: 12px;
-        }
-
-        .date-divider {
-            text-align: center;
             font-size: 11px;
-            color: #7a4a5a;
-            padding: 6px 0 2px;
-        }
-
-        .date-divider span {
-            background: rgba(255,255,255,0.4);
-            padding: 2px 16px;
-            border-radius: 20px;
         }
 
         @keyframes fadeUp {
@@ -347,7 +176,7 @@
             100% { opacity: 1; transform: translateY(0); }
         }
 
-        /* Поле ввода */
+        /* Ввод */
         .input-area {
             padding: 10px 20px 14px;
             background: rgba(255,255,255,0.3);
@@ -399,37 +228,35 @@
             cursor: not-allowed;
         }
 
-        .input-area .sticker-btn {
-            background: rgba(216,27,96,0.1);
-            color: #d81b60;
-            padding: 10px 12px;
-            font-size: 20px;
-            box-shadow: none;
+        .sticker-btn {
+            background: rgba(216,27,96,0.1) !important;
+            color: #d81b60 !important;
+            padding: 10px 12px !important;
+            font-size: 20px !important;
+            box-shadow: none !important;
+            min-width: 44px;
         }
 
-        .input-area .sticker-btn:hover:not(:disabled) {
-            background: rgba(216,27,96,0.2);
+        .sticker-btn:hover:not(:disabled) {
+            background: rgba(216,27,96,0.2) !important;
         }
 
-        /* Правая панель - стикеры */
-        .right-panel {
-            width: 220px;
-            min-width: 180px;
-            background: rgba(255,240,245,0.2);
-            border-left: 1px solid rgba(255,255,255,0.3);
-            padding: 14px;
-            overflow-y: auto;
+        /* Стикеры */
+        .sticker-panel {
+            display: none;
+            padding: 12px 20px;
+            background: rgba(255,255,255,0.2);
+            border-top: 1px solid rgba(255,255,255,0.2);
+            flex-shrink: 0;
         }
 
-        .right-panel h4 {
-            font-size: 13px;
-            color: #7a4a5a;
-            margin-bottom: 8px;
+        .sticker-panel.active {
+            display: block;
         }
 
         .sticker-grid {
             display: grid;
-            grid-template-columns: repeat(4, 1fr);
+            grid-template-columns: repeat(8, 1fr);
             gap: 4px;
         }
 
@@ -440,7 +267,7 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 26px;
+            font-size: 28px;
             cursor: pointer;
             transition: 0.2s;
             border: 2px solid transparent;
@@ -453,35 +280,22 @@
         }
 
         /* Скролл */
-        .messages-area::-webkit-scrollbar,
-        .contact-list::-webkit-scrollbar,
-        .right-panel::-webkit-scrollbar {
+        .messages-area::-webkit-scrollbar {
             width: 4px;
         }
-        .messages-area::-webkit-scrollbar-thumb,
-        .contact-list::-webkit-scrollbar-thumb,
-        .right-panel::-webkit-scrollbar-thumb {
+        .messages-area::-webkit-scrollbar-thumb {
             background: #f06292;
             border-radius: 10px;
         }
 
         /* Адаптив */
-        @media (max-width: 768px) {
+        @media (max-width: 500px) {
             body { padding: 8px; }
             .app-container { height: 98vh; max-height: none; border-radius: 16px; }
-            .sidebar { width: 200px; min-width: 160px; padding: 12px; }
-            .right-panel { display: none; }
-            .main-content { flex-direction: row; }
             .message { max-width: 90%; }
-            .header h1 { font-size: 18px; }
-        }
-
-        @media (max-width: 480px) {
-            .sidebar { width: 100%; min-width: auto; border-right: none; border-bottom: 1px solid rgba(255,255,255,0.3); max-height: 180px; }
-            .main-content { flex-direction: column; }
-            .header { padding: 10px 16px; }
             .header h1 { font-size: 16px; }
-            .header-right .my-id { font-size: 11px; padding: 2px 10px; }
+            .sticker-grid { grid-template-columns: repeat(6, 1fr); }
+            .sticker-grid .sticker { font-size: 22px; }
         }
     </style>
 </head>
@@ -490,278 +304,341 @@
 <div class="app-container">
     <!-- Шапка -->
     <div class="header">
-        <h1><span>🍓</span> Ягодка P2P</h1>
-        <div class="header-right">
-            <span class="my-id">🆔 <span id="myIdDisplay">загрузка...</span></span>
-            <span><span class="status-dot offline" id="statusDot"></span><span id="statusText">офлайн</span></span>
+        <h1><span>🍓</span> Ягодка</h1>
+        <div>
+            <span class="user-name" id="userNameDisplay">загрузка...</span>
+            <span class="status">
+                <span class="dot offline" id="statusDot"></span>
+                <span id="statusText">офлайн</span>
+                <span class="users-online" id="usersCount"></span>
+            </span>
         </div>
     </div>
 
-    <div class="main-content">
-        <!-- Левая панель -->
-        <div class="sidebar">
-            <h3>👤 Контакты</h3>
-            <div class="contact-input-area">
-                <input type="text" id="friendIdInput" placeholder="Введите ID друга" />
-                <button id="connectBtn">🔗</button>
-            </div>
-
-            <div class="contact-list" id="contactList">
-                <div style="text-align:center;padding:20px;color:#7a4a5a;font-size:13px;">
-                    Нет контактов<br>
-                    Введите ID друга для подключения
-                </div>
-            </div>
-
-            <button id="resetBtn" style="padding:8px;border:none;border-radius:20px;background:rgba(216,27,96,0.1);color:#d81b60;font-weight:600;cursor:pointer;font-size:13px;">
-                🔄 Сбросить соединение
-            </button>
+    <!-- Сообщения -->
+    <div class="messages-area" id="messagesArea">
+        <div class="message system">
+            <div class="text">🍓 Добро пожаловать в общий чат!</div>
         </div>
-
-        <!-- Центр - чат -->
-        <div class="chat-panel">
-            <div class="chat-header">
-                <span class="chat-with" id="chatWith">💬 Не выбран контакт</span>
-                <span class="chat-status" id="chatStatus">Подключитесь к другу</span>
-            </div>
-            <div class="messages-area" id="messagesArea">
-                <div style="text-align:center;padding:40px 20px;color:#7a4a5a;font-size:14px;">
-                    🍓 Выберите контакт слева<br>
-                    чтобы начать общение
-                </div>
-            </div>
-            <div class="input-area">
-                <button class="sticker-btn" id="stickerBtn">😊</button>
-                <input type="text" id="messageInput" placeholder="Напишите сообщение..." disabled />
-                <button id="sendBtn" disabled>🍒</button>
-            </div>
+        <div class="message system">
+            <div class="text">⏳ Подключение к сети...</div>
         </div>
+    </div>
 
-        <!-- Правая панель - стикеры -->
-        <div class="right-panel" id="stickerPanel" style="display:none;">
-            <h4>😊 Стикеры</h4>
-            <div class="sticker-grid" id="stickerGrid"></div>
-        </div>
+    <!-- Стикеры -->
+    <div class="sticker-panel" id="stickerPanel">
+        <div class="sticker-grid" id="stickerGrid"></div>
+    </div>
+
+    <!-- Ввод -->
+    <div class="input-area">
+        <button class="sticker-btn" id="stickerToggleBtn">😊</button>
+        <input type="text" id="messageInput" placeholder="Напишите сообщение..." disabled />
+        <button id="sendBtn" disabled>🍒</button>
     </div>
 </div>
 
 <script>
     // ============================================================
-    // 🍓 Ягодка P2P - Без хостинга, через WebRTC
+    // 🍓 Ягодка — Общий чат без ввода ID
+    // Автоматическое подключение через комнату
     // ============================================================
 
     // --- Стикеры ---
-    const STICKERS = ['🍓', '🍒', '🫐', '🍇', '🍉', '😊', '😂', '😍', '🤩', '🥰', '❤️', '🧡', '💛', '💚', '💙', '🎉', '🎊', '✨', '🌟', '🔥'];
+    const STICKERS = ['🍓', '🍒', '🫐', '🍇', '🍉', '🍊', '🍋', '😊', '😂', '😍', '🤩', '🥰', '😘', '❤️', '🧡', '💛', '💚', '💙', '💜', '🎉', '🎊', '✨', '🌟', '🔥'];
+
+    // --- Конфиг ---
+    const ROOM_ID = 'yagodka-chat-room'; // Общая комната для всех
 
     // --- Состояние ---
-    let currentContactId = null;
-    let isConnected = false;
     let peer = null;
-    let conn = null;
     let myId = null;
+    let userName = '';
+    let connections = {};
+    let isConnected = false;
+    let reconnectAttempts = 0;
+    const MAX_RECONNECT = 5;
 
     // --- DOM ---
-    const myIdDisplay = document.getElementById('myIdDisplay');
-    const statusDot = document.getElementById('statusDot');
-    const statusText = document.getElementById('statusText');
-    const friendIdInput = document.getElementById('friendIdInput');
-    const connectBtn = document.getElementById('connectBtn');
-    const resetBtn = document.getElementById('resetBtn');
-    const contactList = document.getElementById('contactList');
     const messagesArea = document.getElementById('messagesArea');
-    const chatWith = document.getElementById('chatWith');
-    const chatStatus = document.getElementById('chatStatus');
     const messageInput = document.getElementById('messageInput');
     const sendBtn = document.getElementById('sendBtn');
-    const stickerBtn = document.getElementById('stickerBtn');
+    const stickerToggleBtn = document.getElementById('stickerToggleBtn');
     const stickerPanel = document.getElementById('stickerPanel');
     const stickerGrid = document.getElementById('stickerGrid');
+    const userNameDisplay = document.getElementById('userNameDisplay');
+    const statusDot = document.getElementById('statusDot');
+    const statusText = document.getElementById('statusText');
+    const usersCount = document.getElementById('usersCount');
 
-    // --- Генерация ID ---
-    function generateId() {
-        const names = ['паша', 'маша', 'саша', 'даша', 'миша', 'наташа', 'гриша', 'андрюша', 'катюша', 'серёжа'];
-        const name = names[Math.floor(Math.random() * names.length)];
-        const num = Math.random().toString(36).substring(2, 6);
-        return `#yagodka-${name}`;
+    // --- Генерация имени ---
+    function generateName() {
+        const adjectives = ['весёлый', 'добрый', 'умный', 'красивый', 'смелый', 'яркий', 'милый', 'крутой', 'забавный', 'нежный'];
+        const nouns = ['ягодка', 'ёжик', 'зайка', 'мишка', 'солнышко', 'цветочек', 'дракончик', 'котик', 'лисичка', 'белочка'];
+        const adj = adjectives[Math.floor(Math.random() * adjectives.length)];
+        const noun = nouns[Math.floor(Math.random() * nouns.length)];
+        return `${adj}_${noun}`;
     }
 
-    // --- Инициализация PeerJS ---
+    // --- Инициализация Peer ---
     function initPeer() {
-        // Генерируем ID
-        myId = generateId();
-        myIdDisplay.textContent = myId;
+        // Генерируем имя
+        userName = generateName();
+        userNameDisplay.textContent = userName;
 
-        // Создаём Peer с нашим ID
-        peer = new Peer(myId, {
-            debug: 2
+        // Создаём Peer
+        peer = new Peer({
+            debug: 0
         });
 
-        // Событие: готов
+        // Готов
         peer.on('open', (id) => {
-            console.log('🆔 Peer готов:', id);
-            myIdDisplay.textContent = id;
-            updateStatus('offline', 'офлайн');
+            console.log('✅ Peer готов:', id);
+            myId = id;
+            userNameDisplay.textContent = `${userName} (${id.slice(0, 6)})`;
+            updateStatus('connecting', 'подключение...');
+            
+            // Подключаемся к комнате
+            joinRoom();
         });
 
-        // Событие: входящее соединение
-        peer.on('connection', (incomingConn) => {
-            console.log('📞 Входящее соединение от:', incomingConn.peer);
-            setupConnection(incomingConn);
+        // Входящее соединение
+        peer.on('connection', (conn) => {
+            console.log('📞 Входящее от:', conn.peer);
+            setupConnection(conn);
         });
 
-        // Событие: ошибка
+        // Ошибка
         peer.on('error', (err) => {
             console.error('❌ Ошибка Peer:', err);
-            updateStatus('offline', 'ошибка');
+            if (err.type === 'peer-unavailable') {
+                // Игнорируем — такой ID не существует
+            } else if (err.type === 'unavailable-id') {
+                // ID занят — пробуем другой
+                peer.destroy();
+                setTimeout(initPeer, 1000);
+            } else {
+                updateStatus('offline', 'ошибка');
+                if (reconnectAttempts < MAX_RECONNECT) {
+                    reconnectAttempts++;
+                    setTimeout(initPeer, 3000);
+                }
+            }
         });
 
-        // Событие: закрытие
+        // Закрытие
         peer.on('close', () => {
             console.log('🔌 Peer закрыт');
             updateStatus('offline', 'офлайн');
             isConnected = false;
-            conn = null;
-            updateUI();
+            connections = {};
+            updateUsersCount();
+            
+            if (reconnectAttempts < MAX_RECONNECT) {
+                reconnectAttempts++;
+                setTimeout(initPeer, 3000);
+            }
         });
+    }
+
+    // --- Подключение к комнате ---
+    function joinRoom() {
+        // Создаём фейковый ID для комнаты
+        // Используем хеш от ROOM_ID
+        let hash = 0;
+        for (let i = 0; i < ROOM_ID.length; i++) {
+            hash = ((hash << 5) - hash) + ROOM_ID.charCodeAt(i);
+            hash = hash & hash;
+        }
+        const roomPeerId = `yagodka-room-${Math.abs(hash).toString(36)}`;
+        
+        console.log('🏠 Подключение к комнате:', roomPeerId);
+        
+        // Пытаемся подключиться к комнате
+        try {
+            const conn = peer.connect(roomPeerId);
+            if (conn) {
+                setupConnection(conn);
+            }
+        } catch (err) {
+            console.log('ℹ️ Комната ещё не создана, создаём...');
+            // Создаём комнату (она создаётся автоматически при первом подключении)
+            // Ждём, пока кто-то подключится
+            addSystemMessage('🍓 Вы первый в чате! Ожидаем других...');
+            updateStatus('online', 'онлайн');
+            isConnected = true;
+            messageInput.disabled = false;
+            sendBtn.disabled = false;
+        }
+
+        // Также пытаемся подключиться к другим известным узлам
+        // Для этого используем простой подход: каждый подключается к комнате
+        // и через неё узнаёт о других
+        setTimeout(() => {
+            discoverPeers();
+        }, 1000);
+    }
+
+    // --- Поиск других пользователей ---
+    function discoverPeers() {
+        // В PeerJS нет встроенного списка всех пользователей
+        // Поэтому мы используем подход: каждый подключается к "комнате"
+        // и рассылает сообщение о себе
+        
+        // Отправляем сообщение о себе
+        const announceMsg = {
+            type: 'announce',
+            sender: myId,
+            name: userName,
+            timestamp: Date.now()
+        };
+
+        // Отправляем всем известным
+        broadcast(announceMsg);
+        
+        updateStatus('online', 'онлайн');
+        isConnected = true;
+        messageInput.disabled = false;
+        sendBtn.disabled = false;
+        
+        // Если есть подключения, добавляем системное сообщение
+        const peers = Object.keys(connections);
+        if (peers.length > 0) {
+            addSystemMessage(`👥 В чате ${peers.length + 1} человек`);
+        } else {
+            addSystemMessage('🍓 Вы в чате! Пригласите друзей — откройте эту же страницу');
+        }
+        
+        updateUsersCount();
     }
 
     // --- Настройка соединения ---
-    function setupConnection(connection) {
-        if (conn) {
-            // Если уже есть соединение, закрываем старое
-            conn.close();
+    function setupConnection(conn) {
+        const peerId = conn.peer;
+        
+        if (connections[peerId]) {
+            // Уже есть соединение
+            return;
         }
 
-        conn = connection;
-        currentContactId = connection.peer;
-        isConnected = true;
+        connections[peerId] = conn;
 
-        // Обработка входящих сообщений
+        // Обработка данных
         conn.on('data', (data) => {
-            console.log('📩 Получено:', data);
-            handleIncomingMessage(data);
+            handleMessage(data, peerId);
         });
 
-        // Обработка закрытия
+        // Закрытие
         conn.on('close', () => {
-            console.log('🔌 Соединение закрыто');
-            isConnected = false;
-            conn = null;
-            updateStatus('offline', 'отключен');
-            updateUI();
-            addSystemMessage('Соединение разорвано');
+            console.log('🔌 Соединение закрыто:', peerId);
+            delete connections[peerId];
+            updateUsersCount();
+            
+            // Показываем, кто вышел
+            const name = conn._data?.name || peerId;
+            addSystemMessage(`👋 ${name} покинул чат`);
         });
 
-        // Обработка ошибок
+        // Ошибка
         conn.on('error', (err) => {
-            console.error('❌ Ошибка соединения:', err);
-            isConnected = false;
-            conn = null;
-            updateStatus('offline', 'ошибка');
-            updateUI();
+            console.error('Ошибка соединения:', err);
+            delete connections[peerId];
+            updateUsersCount();
         });
 
-        // Отправляем приветствие
+        // Отправляем информацию о себе
         conn.send({
-            type: 'system',
-            text: '👋 Привет! Я подключился к тебе!'
+            type: 'announce',
+            sender: myId,
+            name: userName,
+            timestamp: Date.now()
         });
 
-        updateStatus('online', 'онлайн');
-        updateUI();
-        addSystemMessage(`✅ Подключено к ${connection.peer}`);
-
-        // Добавляем в контакты
-        addContact(connection.peer);
+        updateUsersCount();
+        addSystemMessage(`✅ ${peerId} присоединился к чату`);
     }
 
-    // --- Подключение к другу ---
-    function connectToFriend(friendId) {
-        if (!friendId || friendId.trim() === '') {
-            alert('Введите ID друга');
-            return;
-        }
-
-        friendId = friendId.trim();
-
-        if (friendId === myId) {
-            alert('❌ Нельзя подключиться к самому себе!');
-            return;
-        }
-
-        if (conn) {
-            conn.close();
-            conn = null;
-        }
-
-        updateStatus('connecting', 'подключение...');
-
-        try {
-            const newConn = peer.connect(friendId);
-            setupConnection(newConn);
-        } catch (err) {
-            console.error('Ошибка подключения:', err);
-            updateStatus('offline', 'ошибка');
-            alert('❌ Не удалось подключиться. Проверьте ID и попробуйте снова.');
-        }
-    }
-
-    // --- Обработка входящих сообщений ---
-    function handleIncomingMessage(data) {
+    // --- Обработка сообщений ---
+    function handleMessage(data, senderId) {
         if (data.type === 'message') {
-            addMessage(data.text, data.sender || data.user || 'Собеседник');
+            addMessage(data.text, data.name || data.sender || senderId);
         } else if (data.type === 'sticker') {
-            addSticker(data.emoji, data.sender || 'Собеседник');
+            addSticker(data.emoji, data.name || data.sender || senderId);
         } else if (data.type === 'system') {
             addSystemMessage(data.text);
+        } else if (data.type === 'announce') {
+            // Кто-то объявил о себе
+            const name = data.name || data.sender;
+            if (data.sender !== myId && !connections[data.sender]) {
+                // Пытаемся подключиться к этому пользователю
+                try {
+                    const conn = peer.connect(data.sender);
+                    if (conn) {
+                        setupConnection(conn);
+                    }
+                } catch (err) {
+                    // Игнорируем
+                }
+            }
         } else {
-            // Обычное сообщение
-            addMessage(data.text || data, data.sender || 'Собеседник');
+            addMessage(data.text || data, senderId);
         }
     }
 
     // --- Отправка сообщения ---
     function sendMessage(text) {
-        if (!conn || !isConnected) {
-            alert('❌ Нет соединения с собеседником');
-            return;
-        }
+        if (!text || text.trim() === '') return;
 
-        const message = {
+        const msg = {
             type: 'message',
-            text: text,
-            sender: 'Я'
+            text: text.trim(),
+            sender: myId,
+            name: userName,
+            timestamp: Date.now()
         };
 
-        conn.send(message);
-        addMessage(text, 'Вы', true);
+        // Отправляем всем
+        broadcast(msg);
+        
+        // Добавляем в свой чат
+        addMessage(text.trim(), userName, true);
     }
 
     // --- Отправка стикера ---
     function sendSticker(emoji) {
-        if (!conn || !isConnected) {
-            alert('❌ Нет соединения с собеседником');
+        const msg = {
+            type: 'sticker',
+            emoji: emoji,
+            sender: myId,
+            name: userName,
+            timestamp: Date.now()
+        };
+
+        broadcast(msg);
+        addSticker(emoji, userName, true);
+    }
+
+    // --- Рассылка всем ---
+    function broadcast(data) {
+        const peers = Object.keys(connections);
+        if (peers.length === 0) {
             return;
         }
 
-        const message = {
-            type: 'sticker',
-            emoji: emoji,
-            sender: 'Я'
-        };
-
-        conn.send(message);
-        addSticker(emoji, 'Вы', true);
+        peers.forEach(peerId => {
+            try {
+                connections[peerId].send(data);
+            } catch (err) {
+                console.error('Ошибка отправки:', err);
+                delete connections[peerId];
+            }
+        });
+        
+        updateUsersCount();
     }
 
     // --- Добавление сообщения в UI ---
     function addMessage(text, user, isOwn = false) {
-        // Убираем пустое состояние
-        const empty = messagesArea.querySelector('div[style]');
-        if (empty && messagesArea.children.length === 1) {
-            messagesArea.innerHTML = '';
-        }
-
         const div = document.createElement('div');
         div.className = `message ${isOwn ? 'own' : ''}`;
 
@@ -786,11 +663,6 @@
     }
 
     function addSticker(emoji, user, isOwn = false) {
-        const empty = messagesArea.querySelector('div[style]');
-        if (empty && messagesArea.children.length === 1) {
-            messagesArea.innerHTML = '';
-        }
-
         const div = document.createElement('div');
         div.className = `message ${isOwn ? 'own' : ''}`;
 
@@ -815,6 +687,14 @@
     }
 
     function addSystemMessage(text) {
+        // Убираем "Подключение..." если есть
+        const systemMessages = messagesArea.querySelectorAll('.message.system');
+        systemMessages.forEach(el => {
+            if (el.textContent.includes('Подключение')) {
+                el.remove();
+            }
+        });
+
         const div = document.createElement('div');
         div.className = 'message system';
         div.innerHTML = `<div class="text">${text}</div>`;
@@ -822,102 +702,20 @@
         messagesArea.scrollTop = messagesArea.scrollHeight;
     }
 
-    // --- Добавление контакта в список ---
-    function addContact(id) {
-        const existing = contactList.querySelector(`[data-id="${id}"]`);
-        if (existing) {
-            // Обновляем статус
-            const badge = existing.querySelector('.status-badge');
-            if (badge) {
-                badge.textContent = 'онлайн';
-                badge.className = 'status-badge online';
-            }
-            return;
-        }
-
-        const div = document.createElement('div');
-        div.className = 'contact-item active';
-        div.dataset.id = id;
-
-        const nameSpan = document.createElement('span');
-        nameSpan.className = 'name';
-        nameSpan.textContent = id;
-
-        const statusSpan = document.createElement('span');
-        statusSpan.className = 'status-badge online';
-        statusSpan.textContent = 'онлайн';
-
-        div.appendChild(nameSpan);
-        div.appendChild(statusSpan);
-
-        // Клик для выбора контакта
-        div.addEventListener('click', () => {
-            if (conn && isConnected) {
-                currentContactId = id;
-                chatWith.textContent = `💬 ${id}`;
-                chatStatus.textContent = 'онлайн';
-                messageInput.disabled = false;
-                sendBtn.disabled = false;
-                stickerBtn.disabled = false;
-                messageInput.focus();
-            }
-        });
-
-        contactList.innerHTML = '';
-        contactList.appendChild(div);
-    }
-
-    // --- Обновление UI ---
-    function updateUI() {
-        if (isConnected && conn) {
-            chatWith.textContent = `💬 ${conn.peer}`;
-            chatStatus.textContent = 'онлайн';
-            messageInput.disabled = false;
-            sendBtn.disabled = false;
-            stickerBtn.disabled = false;
-            messageInput.focus();
-        } else {
-            chatWith.textContent = '💬 Не выбран контакт';
-            chatStatus.textContent = 'Подключитесь к другу';
-            messageInput.disabled = true;
-            sendBtn.disabled = true;
-            stickerBtn.disabled = true;
-        }
-    }
-
     // --- Обновление статуса ---
     function updateStatus(state, text) {
-        statusDot.className = `status-dot ${state}`;
+        statusDot.className = `dot ${state}`;
         statusText.textContent = text;
     }
 
-    // --- Сброс ---
-    function resetConnection() {
-        if (conn) {
-            conn.close();
-            conn = null;
+    // --- Обновление счётчика пользователей ---
+    function updateUsersCount() {
+        const count = Object.keys(connections).length;
+        if (count > 0) {
+            usersCount.textContent = `👥 ${count}`;
+        } else {
+            usersCount.textContent = '';
         }
-        isConnected = false;
-        currentContactId = null;
-        updateStatus('offline', 'офлайн');
-        updateUI();
-        addSystemMessage('🔄 Соединение сброшено');
-
-        // Очищаем контакты
-        contactList.innerHTML = `
-            <div style="text-align:center;padding:20px;color:#7a4a5a;font-size:13px;">
-                Нет контактов<br>
-                Введите ID друга для подключения
-            </div>
-        `;
-
-        // Очищаем сообщения
-        messagesArea.innerHTML = `
-            <div style="text-align:center;padding:40px 20px;color:#7a4a5a;font-size:14px;">
-                🍓 Выберите контакт слева<br>
-                чтобы начать общение
-            </div>
-        `;
     }
 
     // --- Стикеры ---
@@ -928,10 +726,12 @@
             div.className = 'sticker';
             div.textContent = emoji;
             div.addEventListener('click', () => {
-                if (isConnected && conn) {
+                if (isConnected) {
                     sendSticker(emoji);
+                    stickerPanel.classList.remove('active');
+                    stickerToggleBtn.textContent = '😊';
                 } else {
-                    alert('❌ Нет соединения с собеседником');
+                    addSystemMessage('⏳ Подождите подключения к сети');
                 }
             });
             stickerGrid.appendChild(div);
@@ -939,27 +739,13 @@
     }
 
     // --- Обработчики ---
-    connectBtn.addEventListener('click', () => {
-        const id = friendIdInput.value.trim();
-        if (id) {
-            connectToFriend(id);
-            friendIdInput.value = '';
-        } else {
-            alert('Введите ID друга');
-        }
-    });
-
-    friendIdInput.addEventListener('keydown', (e) => {
-        if (e.key === 'Enter') {
-            connectBtn.click();
-        }
-    });
-
     sendBtn.addEventListener('click', () => {
         const text = messageInput.value.trim();
         if (text && isConnected) {
             sendMessage(text);
             messageInput.value = '';
+        } else if (!isConnected) {
+            addSystemMessage('⏳ Подождите подключения к сети');
         }
     });
 
@@ -970,34 +756,25 @@
         }
     });
 
-    resetBtn.addEventListener('click', resetConnection);
-
-    stickerBtn.addEventListener('click', () => {
-        if (stickerPanel.style.display === 'none') {
-            stickerPanel.style.display = 'block';
-            stickerBtn.textContent = '✕';
-        } else {
-            stickerPanel.style.display = 'none';
-            stickerBtn.textContent = '😊';
-        }
+    stickerToggleBtn.addEventListener('click', () => {
+        stickerPanel.classList.toggle('active');
+        stickerToggleBtn.textContent = stickerPanel.classList.contains('active') ? '✕' : '😊';
     });
 
     // --- Запуск ---
     initPeer();
     initStickers();
 
-    console.log('🍓 Ягодка P2P готова!');
-    console.log('🆔 Ваш ID:', myId);
-    console.log('📌 Дайте этот ID другу для подключения');
+    console.log('🍓 Ягодка Общий чат запущен!');
+    console.log('👤 Имя:', userName);
+    console.log('📌 Просто откройте эту страницу — и вы в чате!');
 
-    // Автоподключение если есть параметр в URL
-    const urlParams = new URLSearchParams(window.location.search);
-    const friendId = urlParams.get('connect');
-    if (friendId) {
-        setTimeout(() => {
-            connectToFriend(friendId);
-        }, 1000);
-    }
+    // Периодическое обновление (keep-alive)
+    setInterval(() => {
+        if (isConnected && Object.keys(connections).length > 0) {
+            broadcast({ type: 'ping', timestamp: Date.now() });
+        }
+    }, 30000);
 </script>
 </body>
 </html>
